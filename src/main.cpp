@@ -51,9 +51,9 @@ int main ()
 
 	Button* thing = new Button(0, 0, 250, 50, GetColor(0xb265bdff));
 	containser->add(thing);
-	thing->clickCallback = () -> {
-		
-	}
+	thing->clickCallback = [&]() {
+		containser->remove(thing);
+	};
 	Sprite* icon = new Sprite(5, 5, LoadTexture("wabbit_alpha.png"));
 	thing->add(icon);
 	Text* text = new Text(30, 10, "click to destroy dis fukin bunny", 10);

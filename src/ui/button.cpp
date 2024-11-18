@@ -1,12 +1,13 @@
 #include "raylib.h"
 #include "object.cpp"
-#include "raymath.h" 
+#include "raymath.h"
+#include <functional>
 
 extern Vector2 mousePosition;
 
 class Button : public Object{
     public:
-        virtual void clickCallback() = 0;
+        std::function<void()> clickCallback = 0;
         bool isHovering = false;
 
         float tint = 0.0f;
