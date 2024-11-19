@@ -24,15 +24,21 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 
 */
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow" 
+
+#include "global.cpp"
 #include "raylib.h"
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
 #include "ui/button.cpp"
 #include "ui/container.cpp"
 #include "ui/sprite.cpp"
 #include "ui/text.cpp"
+#include "engine_selector.cpp"
 #include <vector>
 #include <stdio.h>
 #include <math.h>
+
 std::vector<Object*> children = {};
 void add(Object* child) {
 	children.push_back(child);
@@ -42,38 +48,15 @@ Vector2 mousePosition = {-100.0f, -100.0f};
 
 int main ()
 {
-	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-	InitWindow(854, 480, "Hello Raylib");
+	SetConfigFlags(FLAG_VSYNC_HINT);
+	InitWindow(1280, 720, "Hello Raylib");
 	SearchAndSetResourceDir("resources");
-
-	Container* containser = new Container(20, 20, 250, 225);
-	add(containser);
-
-	Button* thing = new Button(0, 0, 250, 50, GetColor(0xb265bdff));
-	containser->add(thing);
-	thing->clickCallback = [&]() {
-		containser->remove(thing);
-	};
-	Sprite* icon = new Sprite(5, 5, LoadTexture("wabbit_alpha.png"));
-	thing->add(icon);
-	Text* text = new Text(30, 10, "click to destroy dis fukin bunny", 10);
-	thing->add(text);
-	Button* thing2 = new Button(0, 50, 250, 50, GetColor(0xb4152dff));
-	containser->add(thing2);
-	Button* thing3 = new Button(0, 100, 250, 50, GetColor(0x22656dff));
-	containser->add(thing3);
-	Button* thing4 = new Button(0, 150, 250, 50, GetColor(0xb2d22dff));
-	containser->add(thing4);
-	Button* thing5 = new Button(0, 200, 250, 50, GetColor(0xb26dbdff));
-	containser->add(thing5);
-	Button* thing6 = new Button(0, 250, 250, 50, GetColor(0xbd65bdff));
-	containser->add(thing6);
+	
+	EngineSelector* here = new EngineSelector();
+	add(here);
 	
 	while (!WindowShouldClose())
 	{
-
-		containser->height = 225 - (sin(GetTime()) * 50);
-
 
 		mousePosition = GetMousePosition();
 		for (auto child : children) {
@@ -81,7 +64,7 @@ int main ()
 		}
 
 		BeginDrawing();
-		ClearBackground(BLACK);
+		ClearBackground(BACKGROUNDPRIMARYCOLOR);
 
 		// draw some text using the default font
 		DrawText("Hello Raylib", 200,200,20, GetColor(0xff0000ff));

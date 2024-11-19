@@ -1,7 +1,9 @@
-#ifndef _INCLUDED_OBJECT_CPP_
-#define _INCLUDED_OBJECT_CPP_
+#ifndef _OBJECT_CPP_
+#define _OBJECT_CPP_
 
 #include "raylib.h"
+#include "raymath.h"
+#include "global.cpp"
 #include <vector>
 
 class Object {
@@ -14,6 +16,8 @@ class Object {
         Color color = {255, 255, 255, 255};
 
         std::vector<Object*> children;
+
+        bool isHovering = false;
 
         Object(int x, int y, int width, int height) {
             this->x = x;
@@ -35,6 +39,8 @@ class Object {
         };
 
         virtual void update(float elapsed) {
+            isHovering = GetMousePosition().x == Clamp(GetMousePosition().x, x, x + width) && 
+                         GetMousePosition().y == Clamp(GetMousePosition().y, y, y + height);
             for (auto child : children) {
                 child->x += x;
                 child->y += y;
@@ -54,6 +60,10 @@ class Object {
                 
                 child->x -= x;
                 child->y -= y;
+            }
+
+            if (DEBUGMODE) {
+                DrawRectangle(x, y, width, height, GetColor(0xff000044));
             }
         };
 };

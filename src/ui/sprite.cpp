@@ -1,3 +1,6 @@
+#ifndef _SPRITE_CPP_
+#define _SPRITE_CPP_
+
 #include "raylib.h"
 #include "object.cpp"
 
@@ -16,3 +19,5 @@ class Sprite : public Object {
             Object::draw();
         }
 };
+
+#endif

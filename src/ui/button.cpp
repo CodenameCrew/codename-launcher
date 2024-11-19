@@ -8,7 +8,6 @@ extern Vector2 mousePosition;
 class Button : public Object{
     public:
         std::function<void()> clickCallback = 0;
-        bool isHovering = false;
 
         float tint = 0.0f;
 
@@ -19,9 +18,6 @@ class Button : public Object{
 
         void update(float elapsed) {
             Object::update(elapsed);
-
-            isHovering = GetMousePosition().x == Clamp(GetMousePosition().x, x, x + width) && 
-                         GetMousePosition().y == Clamp(GetMousePosition().y, y, y + height);
 
             if (isHovering) {
                 tint = 0.4f;

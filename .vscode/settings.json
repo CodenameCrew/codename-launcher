@@ -95,6 +95,7 @@
 		"typeinfo": "cpp",
 		"valarray": "cpp",
 		"variant": "cpp",
-		"*.m": "cpp"
+		"*.m": "cpp",
+		"global.c": "cpp"
 	}
 }
