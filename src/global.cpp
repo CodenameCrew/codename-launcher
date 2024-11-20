@@ -5,8 +5,8 @@
 #include <string>
 
 #define DEBUGMODE false
-#define DEFAULTFONT "fonts/arial.ttf"
-#define DEFAULTFONTBOLD "fonts/arialbd.ttf"
+#define DEFAULTFONT ASSETS_PATH"fonts/arial.ttf"
+#define DEFAULTFONTBOLD ASSETS_PATH"fonts/arialbd.ttf"
 
 #define PRIMARYCOLOR CLITERAL(Color){178, 101, 189, 255}
 #define SECONDARYCOLOR CLITERAL(Color){137, 72, 165, 255}

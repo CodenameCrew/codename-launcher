@@ -42,15 +42,15 @@ class EngineSelector : public Container
 public:
     EngineSelector() : Container(50, 50, 400, 620)
     {
-        EngineContainer *codename = new EngineContainer("Codename Engine", LoadTexture("codename.png"), "1.0.0", "");
+        EngineContainer *codename = new EngineContainer("Codename Engine", LoadTexture(ASSETS_PATH"codename.png"), "1.0.0", "");
         add(codename);
-        EngineContainer *codename2 = new EngineContainer("Codename Engine Dev", LoadTexture("codename.png"), "dis shit ain't even releasd", "");
+        EngineContainer *codename2 = new EngineContainer("Codename Engine Dev", LoadTexture(ASSETS_PATH"codename.png"), "dis shit ain't even releasd", "");
         add(codename2);
-        EngineContainer *psych = new EngineContainer("Psych Engine", LoadTexture("psych.png"), "0.7.3", "");
+        EngineContainer *psych = new EngineContainer("Psych Engine", LoadTexture(ASSETS_PATH"psych.png"), "0.7.3", "");
         add(psych);
-        EngineContainer *fpsplus = new EngineContainer("FPS Plus Engine", LoadTexture("fpsplus.png"), "6.0.1", "");
+        EngineContainer *fpsplus = new EngineContainer("FPS Plus Engine", LoadTexture(ASSETS_PATH"fpsplus.png"), "6.0.1", "");
         add(fpsplus);
-        EngineContainer *os = new EngineContainer("OS Engine", LoadTexture("unknown.png"), "2 trash 2 actually have a version", "");
+        EngineContainer *os = new EngineContainer("OS Engine", LoadTexture(ASSETS_PATH"unknown.png"), "2 trash 2 actually have a version", "");
         add(os);
     }
 

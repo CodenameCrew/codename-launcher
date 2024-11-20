@@ -29,7 +29,6 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 
 #include "global.cpp"
 #include "raylib.h"
-#include "resource_dir.h"	// utility header for SearchAndSetResourceDir
 #include "ui/button.cpp"
 #include "ui/container.cpp"
 #include "ui/sprite.cpp"
@@ -50,7 +49,6 @@ int main ()
 {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
-	SearchAndSetResourceDir("resources");
 	
 	EngineSelector* here = new EngineSelector();
 	add(here);
