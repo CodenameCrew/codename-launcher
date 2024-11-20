@@ -26,36 +26,38 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 
 #pragma GCC diagnostic push
 
+#include "engine_selector.h"
 #include "global.h"
 #include "raylib.h"
 #include "ui/button.h"
 #include "ui/container.h"
 #include "ui/sprite.h"
 #include "ui/text.h"
-#include "engine_selector.h"
-#include <vector>
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
+#include <vector>
 
-std::vector<Object*> children = {};
-void add(Object* child) {
+std::vector<Object *> children = {};
+void add(Object *child)
+{
 	children.push_back(child);
 }
 
 Vector2 mousePosition = {-100.0f, -100.0f};
 
-int main ()
+int main()
 {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
-	EngineSelector* here = new EngineSelector();
+	EngineSelector *here = new EngineSelector();
 	add(here);
 
 	while (!WindowShouldClose())
 	{
 		mousePosition = GetMousePosition();
-		for (auto child : children) {
+		for (auto child : children)
+		{
 			child->update(GetFrameTime());
 		}
 
@@ -63,9 +65,10 @@ int main ()
 		ClearBackground(BACKGROUNDPRIMARYCOLOR);
 
 		// draw some text using the default font
-		DrawText("Hello Raylib", 200,200,20, GetColor(0xff0000ff));
+		DrawText("Hello Raylib", 200, 200, 20, GetColor(0xff0000ff));
 
-		for (auto child : children) {
+		for (auto child : children)
+		{
 			child->draw();
 		}
 

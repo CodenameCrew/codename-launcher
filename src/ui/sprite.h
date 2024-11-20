@@ -1,12 +1,13 @@
 #pragma once
 
-#include "raylib.h"
 #include "object.h"
+#include "raylib.h"
 
-class Sprite : public Object {
-    public:
-        Texture2D texture;
-        Sprite(int x, int y, Texture2D texture);
+class Sprite : public Object
+{
+public:
+	Texture2D texture;
+	Sprite(int x, int y, Texture2D texture);
 
-        void draw();
+	void draw();
 };

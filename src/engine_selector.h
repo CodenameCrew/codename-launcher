@@ -6,25 +6,25 @@
 class EngineContainer : public Container
 {
 public:
-    const char *name;
-    const char *path;
-    const char *version;
+	const char *name;
+	const char *path;
+	const char *version;
 
-    Sprite *spriteicon;
-    Text *textname;
-    Text *textversion;
+	Sprite *spriteIcon;
+	Text *textName;
+	Text *textVersion;
 
-    EngineContainer(const char *enginename, Texture2D engineicon, const char *engineversion, const char *folderpath);
+	EngineContainer(const char *engineName, Texture2D engineIcon, const char *engineVersion, const char *folderPath);
 
-    void draw();
+	void draw();
 };
 
 class EngineSelector : public Container
 {
 public:
-    EngineSelector();
+	EngineSelector();
 
-    void update(float elapsed);
+	void update(float elapsed);
 
-    void draw();
+	void draw();
 };
