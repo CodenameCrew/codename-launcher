@@ -1,5 +1,4 @@
 .idea/
-.vscode/
 .vs/
 cmake-build-debug/
 bin/
@@ -8,3 +7,7 @@ out/
 CMakeSettings.json
 _deps
 CMakeFiles
+CPackConfig.cmake
+CPackSourceConfig.cmake
+CMakeCache.txt
+MakeFile
