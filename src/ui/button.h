@@ -3,7 +3,6 @@
 #include "object.h"
 #include "raylib.h"
 #include "raymath.h"
-#include <functional>
 
 class Button : public Object
 {
