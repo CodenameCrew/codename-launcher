@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(codename_launcher CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Debug)
 
 # Adding Raylib
 include(FetchContent)
