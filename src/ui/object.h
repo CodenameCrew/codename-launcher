@@ -20,6 +20,7 @@ public:
 	bool isHovering = false;
 
 	Object(int x, int y, int width, int height);
+	virtual ~Object() = default;
 
 	virtual void add(Object *child);
 	virtual void remove(Object *child);

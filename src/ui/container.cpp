@@ -14,7 +14,7 @@ void Container::update(float elapsed)
 	Object *lastChild = children.back();
 	scrollMax = std::max(0, (lastChild->y + lastChild->height) - height);
 	if (isHovering)
-		scroll = Clamp(scroll - (int)(GetMouseWheelMove() * 20), 0, scrollMax);
+		scroll = (int)Clamp(scroll - (int)(GetMouseWheelMove() * 20), 0, scrollMax);
 	// TraceLog(LOG_INFO, TextFormat("%i", scroll));
 
 	y -= scroll;

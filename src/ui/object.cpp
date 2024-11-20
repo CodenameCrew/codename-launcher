@@ -16,10 +16,10 @@ void Object::add(Object *child)
 };
 void Object::remove(Object *child)
 {
-	for (int i = 0; i < children.size(); i++)
-		if (children.at(i) == child)
+	for (auto it = children.begin(); it != children.end(); ++it)
+		if (*it == child)
 		{
-			children.erase(children.begin() + i);
+			children.erase(it);
 			break;
 		}
 };

@@ -13,7 +13,7 @@ set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # don't build the supplied example g
 FetchContent_Declare(
     raylib
     GIT_REPOSITORY "https://github.com/raysan5/raylib.git"
-    GIT_TAG "master"
+    GIT_TAG "master" # 5.5
     GIT_PROGRESS TRUE
 )
 
@@ -30,8 +30,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 # Setting ASSETS_PATH
-target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
-#target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro in release mode to a relative path that assumes the assets folder is in the same directory as the game executable
+if(CMAKE_BUILD_TYPE MATCHES "Release")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/") # Set the asset path macro in release mode to a relative path that assumes the assets folder is in the same directory as the game executable
+else()
+    target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
+endif()
 
 include(CheckCXXCompilerFlag)
 
@@ -48,3 +51,39 @@ endfunction()
 
 enable_cxx_compiler_flag_if_supported("-Wall")
 enable_cxx_compiler_flag_if_supported("-pedantic")
+enable_cxx_compiler_flag_if_supported("-fsanitize=address,undefined")
+enable_cxx_compiler_flag_if_supported("-fsanitize=thread")
+
+# enable_cxx_compiler_flag_if_supported("-Wshadow") # Disabled due to classes and fields being named the same thing just with different capitalization
+enable_cxx_compiler_flag_if_supported("-Wconversion")
+enable_cxx_compiler_flag_if_supported("-Wnon-virtual-dtor")
+enable_cxx_compiler_flag_if_supported("-Woverloaded-virtual")
+enable_cxx_compiler_flag_if_supported("-Wunused")
+enable_cxx_compiler_flag_if_supported("-Wnull-dereference")
+enable_cxx_compiler_flag_if_supported("-Wformat=2")
+enable_cxx_compiler_flag_if_supported("-fstack-protector-all")
+# enable_cxx_compiler_flag_if_supported("-Wfloat-equal") # Can't use this since raylib has warnings due to it
+
+enable_cxx_compiler_flag_if_supported("-fno-rtti")
+enable_cxx_compiler_flag_if_supported("-fdiagnostics-color=always")
+
+# if debug mode, enable debug stuff
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    target_compile_options(${PROJECT_NAME} PRIVATE -g)
+    enable_cxx_compiler_flag_if_supported("-D_GLIBCXX_DEBUG")
+    enable_cxx_compiler_flag_if_supported("-g3")
+endif()
+
+# if release mode, strip the binary
+if(CMAKE_BUILD_TYPE MATCHES "Release")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_STRIP} "$<TARGET_FILE:${PROJECT_NAME}>"
+            COMMENT "Stripping release binary")
+endif()
+
+# if release mode, enable optimizations
+if(CMAKE_BUILD_TYPE MATCHES "Release")
+    target_compile_options(${PROJECT_NAME} PRIVATE -O2)
+    target_compile_options(${PROJECT_NAME} PRIVATE -flto)
+    target_link_options(${PROJECT_NAME} PRIVATE -flto)
+endif()

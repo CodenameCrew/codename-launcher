@@ -24,8 +24,6 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 
 */
 
-#pragma GCC diagnostic push
-
 #include "engine_selector.h"
 #include "global.h"
 #include "raylib.h"
