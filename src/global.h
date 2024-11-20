@@ -1,5 +1,4 @@
-#ifndef _GLOBAL_CPP_
-#define _GLOBAL_CPP_
+#pragma once
 
 #include "raylib.h"
 #include <string>
@@ -13,5 +12,3 @@
 #define BACKGROUNDPRIMARYCOLOR CLITERAL(Color){45, 30, 50, 255}
 #define BACKGROUNDSECONDARYCOLOR CLITERAL(Color){33, 22, 37, 255}
 #define LISTCOLOR CLITERAL(Color){21, 14, 23, 255}
-
-#endif

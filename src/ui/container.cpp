@@ -1,44 +1,37 @@
-#ifndef _CONTAINER_CPP_
-#define _CONTAINER_CPP_
-
 #include "raylib.h"
 #include "raymath.h"
-#include "object.cpp"
+#include "object.h"
+#include "container.h"
 
-class Container : public Object {
-    public:
-        int scroll = 0;
-        int scrollMax = 0;
-        Container(int x, int y, int width, int height) : Object(x, y, width, height) {
-            // nothing ig
-        }
+Container::Container(int x, int y, int width, int height) : Object(x, y, width, height) {
+    // nothing ig
+}
 
-        virtual void update(float elapsed) {
-            isHovering = GetMousePosition().x == Clamp(GetMousePosition().x, x, x + width) && 
-                         GetMousePosition().y == Clamp(GetMousePosition().y, y, y + height);
+void Container::update(float elapsed) {
+    Vector2 mousePosition = GetMousePosition();
 
-            scrollMax = std::max(0, (children.back()->y + children.back()->height) - height);
-            if (isHovering) scroll = Clamp(scroll - (int)(GetMouseWheelMove()*20), 0, scrollMax);
-            TraceLog(LOG_INFO, TextFormat("%i", scroll));
+    isHovering = mousePosition.x == Clamp(mousePosition.x, x, x + width) &&
+                 mousePosition.y == Clamp(mousePosition.y, y, y + height);
 
-            y -= scroll;
-            Object::update(elapsed);
-            y += scroll;
-        }
+    scrollMax = std::max(0, (children.back()->y + children.back()->height) - height);
+    if (isHovering) scroll = Clamp(scroll - (int)(GetMouseWheelMove()*20), 0, scrollMax);
+    TraceLog(LOG_INFO, TextFormat("%i", scroll));
 
-        virtual void draw() {
-            BeginScissorMode(x, y, width, height);
+    y -= scroll;
+    Object::update(elapsed);
+    y += scroll;
+}
 
-            y -= scroll;
-            Object::draw();
-            y += scroll;
+void Container::draw() {
+    BeginScissorMode(x, y, width, height);
 
-            EndScissorMode();
+    y -= scroll;
+    Object::draw();
+    y += scroll;
 
-            if (scrollMax != 0) {
-                DrawRectangleRounded({float(x + width - 5), float(y + scroll), 4, float(height - scrollMax)}, 1.0f, 10, WHITE);
-            }
-        }
-};
+    EndScissorMode();
 
-#endif
+    if (scrollMax != 0) {
+        DrawRectangleRounded({float(x + width - 5), float(y + scroll), 4, float(height - scrollMax)}, 1.0f, 10, WHITE);
+    }
+}

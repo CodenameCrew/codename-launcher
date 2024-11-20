@@ -7,3 +7,6 @@
 *.raw binary
 *.obj binary
 *.gltf binary
+
+*.h linguist-language=cpp
+*.cpp linguist-language=cpp
