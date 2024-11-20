@@ -6,8 +6,10 @@ build/
 out/
 CMakeSettings.json
 _deps
-CMakeFiles
+
+CMakeFiles/
+CMakeCache.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake
-CMakeCache.txt
 Makefile
+cmake_install.cmake
