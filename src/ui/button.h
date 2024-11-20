@@ -8,8 +8,6 @@
 class Button : public Object
 {
 public:
-	std::function<void()> clickCallback = nullptr;
-
 	float tint = 0.0f;
 
 	Button(int x, int y, int width, int height, Color color);
@@ -17,4 +15,6 @@ public:
 	void update(float elapsed);
 
 	void draw();
+
+	virtual void clickCallback() {};
 };

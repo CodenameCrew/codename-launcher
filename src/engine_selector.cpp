@@ -20,7 +20,7 @@ EngineContainer::EngineContainer(const char *engineName, Texture2D engineIcon, c
 void EngineContainer::draw()
 {
 	DrawRectangle(x, y, width, height, BACKGROUNDSECONDARYCOLOR);
-	DrawRectangleLinesEx({float(x), float(y), float(width), float(height)}, 2.0f, GetColor(0x00000033));
+	DrawRectangleLinesEx(Rectangle{float(x), float(y), float(width), float(height)}, 2.0f, GetColor(0x00000033));
 
 	Container::draw();
 }
@@ -59,7 +59,7 @@ void EngineSelector::update(float elapsed)
 void EngineSelector::draw()
 {
 	DrawRectangle(x, y, width, height, LISTCOLOR);
-	DrawRectangleLinesEx({float(x), float(y), float(width), float(height)}, 2.0f, GetColor(0x00000033));
+	DrawRectangleLinesEx(Rectangle{float(x), float(y), float(width), float(height)}, 2.0f, GetColor(0x00000033));
 
 	Container::draw();
 }

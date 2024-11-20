@@ -18,7 +18,10 @@ void Object::remove(Object *child)
 {
 	for (int i = 0; i < children.size(); i++)
 		if (children.at(i) == child)
+		{
 			children.erase(children.begin() + i);
+			break;
+		}
 };
 
 void Object::update(float elapsed)

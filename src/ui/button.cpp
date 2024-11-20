@@ -20,8 +20,7 @@ void Button::update(float elapsed)
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
-			if (clickCallback != 0)
-				clickCallback();
+			clickCallback();
 		}
 	}
 	else
@@ -31,7 +30,7 @@ void Button::update(float elapsed)
 void Button::draw()
 {
 	DrawRectangle(x, y, width, height, ColorBrightness(color, tint));
-	DrawRectangleLinesEx({float(x), float(y), float(width), float(height)}, 2, GetColor(0x00000033));
+	DrawRectangleLinesEx(Rectangle{float(x), float(y), float(width), float(height)}, 2, GetColor(0x00000033));
 
 	Object::draw();
 };
