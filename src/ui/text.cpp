@@ -1,7 +1,4 @@
-#include "raylib.h"
 #include "text.h"
-#include "object.h"
-#include "global.h"
 
 Text::Text(int x, int y, int width, int height, const char *text, float size, Color color, const char* font) : Object(x, y, width, height) {
     this->text = text;
@@ -14,7 +11,7 @@ Text::Text(int x, int y, int width, int height, const char *text, float size, Co
 void Text::draw() {
     Object::draw();
 
-    DrawTextBoxedSelectable(font, text, {float(x), float(y), float(width), float(height)}, size, 0.5f, true, color, 0, 0, BLUE, BLUE);
+    DrawTextBoxedSelectable(font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, true, color, 0, 0, BLUE, BLUE);
 };
 
 void Text::DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint, Color selectBackTint)

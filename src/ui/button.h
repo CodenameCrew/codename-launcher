@@ -7,7 +7,7 @@
 
 class Button : public Object {
     public:
-        std::function<void()> clickCallback = 0;
+        std::function<void()> clickCallback = nullptr;
 
         float tint = 0.0f;
 

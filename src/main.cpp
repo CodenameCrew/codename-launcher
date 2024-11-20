@@ -54,7 +54,6 @@ int main ()
 
 	while (!WindowShouldClose())
 	{
-
 		mousePosition = GetMousePosition();
 		for (auto child : children) {
 			child->update(GetFrameTime());

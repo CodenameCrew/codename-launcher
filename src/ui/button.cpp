@@ -1,8 +1,4 @@
-#include "raylib.h"
-#include "raymath.h"
 #include "button.h"
-#include "object.h"
-#include <functional>
 
 extern Vector2 mousePosition;
 

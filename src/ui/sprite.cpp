@@ -1,6 +1,4 @@
-#include "raylib.h"
 #include "sprite.h"
-#include "object.h"
 
 Sprite::Sprite(int x, int y, Texture2D texture) : Object(x, y, 0, 0) {
     this->texture = texture;
