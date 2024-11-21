@@ -34,6 +34,6 @@ void Container::draw()
 
 	if (scrollMax != 0)
 	{
-		DrawRectangleRounded(Rectangle{float(x + width - 5), float(y + scroll), 4, float(height - scrollMax)}, 1.0f, 10, WHITE);
+		DrawRectangleRounded(Rectangle{x + width - 5, y + scroll, 4, height - scrollMax}, 1.0f, 10, WHITE);
 	}
 }

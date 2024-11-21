@@ -24,21 +24,12 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 
 */
 
-#include "engine_selector.h"
-#include "global.h"
-#include "raylib.h"
-#include "ui/button.h"
-#include "ui/container.h"
-#include "ui/sprite.h"
-#include "ui/text.h"
-#include <math.h>
-#include <stdio.h>
-#include <vector>
+#include "main.h"
 
-std::vector<Object *> children = {};
-void add(Object *child)
+std::vector<Object *> mainchildren;
+void addToMain(Object *child)
 {
-	children.push_back(child);
+	mainchildren.push_back(child);
 }
 
 Vector2 mousePosition = {-100.0f, -100.0f};
@@ -48,13 +39,21 @@ int main()
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
-	EngineSelector *here = new EngineSelector();
-	add(here);
+	std::vector<Engine*> enginers = {};
+	enginers.push_back(new Engine("Codename engine", ".", "1.0.0", "codename.png"));
+	enginers.push_back(new Engine("CNE Dev", ".", "dev.0.0", "codename.png"));
+	enginers.push_back(new Engine("Psych engine", ".", "0.7.3", "psych.png"));
+	enginers.push_back(new Engine("Psych engine", ".", "github branch: dev", "psych.png"));
+	enginers.push_back(new Engine("FPS Plus engine", ".", "6.0.1", "fpsplus.png"));
+	enginers.push_back(new Engine("OS engine", ".", "v2", "unknown.png"));
+
+	EngineSelector *here = new EngineSelector(enginers);
+	addToMain(here);
 
 	while (!WindowShouldClose())
 	{
 		mousePosition = GetMousePosition();
-		for (auto child : children)
+		for (auto child : mainchildren)
 		{
 			child->update(GetFrameTime());
 		}
@@ -65,7 +64,7 @@ int main()
 		// draw some text using the default font
 		DrawText("Hello Raylib", 200, 200, 20, GetColor(0xff0000ff));
 
-		for (auto child : children)
+		for (auto child : mainchildren)
 		{
 			child->draw();
 		}

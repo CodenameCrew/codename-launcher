@@ -27,8 +27,8 @@ void Button::update(float elapsed)
 
 void Button::draw()
 {
-	DrawRectangleRec((Rectangle){x, y, width, height}, ColorBrightness(color, tint));
-	DrawRectangleLinesEx(Rectangle{float(x), float(y), float(width), float(height)}, 2, GetColor(0x00000033));
+	DrawRectangleRec(Rectangle{x, y, width, height}, ColorBrightness(color, tint));
+	DrawRectangleLinesEx(Rectangle{x, y, width, height}, 2, GetColor(0x00000033));
 
 	Object::draw();
 };

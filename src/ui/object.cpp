@@ -7,7 +7,7 @@ Object::Object(float x, float y, float width, float height)
 	this->width = width;
 	this->height = height;
 
-	TraceLog(LOG_INFO, TextFormat("made object: {x: %i, y: %i}", this->x, this->y));
+	TraceLog(LOG_INFO, TextFormat("made object: {x: %0.2f, y: %0.2f}", this->x, this->y));
 };
 
 void Object::add(Object *child)
