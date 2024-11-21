@@ -7,7 +7,7 @@ class Sprite : public Object
 {
 public:
 	Texture2D texture;
-	Sprite(int x, int y, Texture2D texture);
+	Sprite(float x, float y, Texture2D texture);
 
 	void draw();
 };

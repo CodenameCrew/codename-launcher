@@ -8,18 +8,20 @@
 class Object
 {
 public:
-	int x = 0;
-	int y = 0;
-	int width = 0;
-	int height = 0;
+	float x = 0;
+	float y = 0;
+	float width = 0;
+	float height = 0;
+	Object* parent;
 
 	Color color = {255, 255, 255, 255};
 
 	std::vector<Object *> children;
 
 	bool isHovering = false;
+	bool hoverable = false;
 
-	Object(int x, int y, int width, int height);
+	Object(float x, float y, float width, float height);
 	virtual ~Object() = default;
 
 	virtual void add(Object *child);

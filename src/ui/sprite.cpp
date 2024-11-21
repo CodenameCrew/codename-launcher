@@ -1,6 +1,6 @@
 #include "sprite.h"
 
-Sprite::Sprite(int x, int y, Texture2D texture) : Object(x, y, 0, 0)
+Sprite::Sprite(float x, float y, Texture2D texture) : Object(x, y, 0, 0)
 {
 	this->texture = texture;
 	this->width = texture.width;
@@ -9,7 +9,7 @@ Sprite::Sprite(int x, int y, Texture2D texture) : Object(x, y, 0, 0)
 
 void Sprite::draw()
 {
-	DrawTexture(texture, x, y, color);
+	DrawTextureV(texture, (Vector2){x, y}, color);
 
 	Object::draw();
 }

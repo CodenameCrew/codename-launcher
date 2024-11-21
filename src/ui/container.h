@@ -9,7 +9,7 @@ class Container : public Object
 public:
 	int scroll = 0;
 	int scrollMax = 0;
-	Container(int x, int y, int width, int height);
+	Container(float x, float y, float width, float height);
 
 	virtual void update(float elapsed);
 

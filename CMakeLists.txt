@@ -19,6 +19,15 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
+FetchContent_Declare(
+    nfd
+    GIT_REPOSITORY "https://github.com/mlabbe/nativefiledialog"
+    GIT_TAG "master"
+    GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(nfd)
+
 # Adding our source files
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp") # Define PROJECT_SOURCES as a list of all source files
 set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/") # Define PROJECT_INCLUDE to be the path to the include directory of the project
@@ -65,7 +74,6 @@ enable_cxx_compiler_flag_if_supported("-fstack-protector-all")
 # enable_cxx_compiler_flag_if_supported("-Wfloat-equal") # Can't use this since raylib has warnings due to it
 
 enable_cxx_compiler_flag_if_supported("-fno-rtti")
-enable_cxx_compiler_flag_if_supported("-fdiagnostics-color=always")
 
 # if debug mode, enable debug stuff
 if(CMAKE_BUILD_TYPE MATCHES "Debug")

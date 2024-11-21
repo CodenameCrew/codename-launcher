@@ -1,11 +1,12 @@
 #include "text.h"
 
-Text::Text(int x, int y, int width, int height, const char *text, float size, Color color, const char *font) : Object(x, y, width, height)
+Text::Text(int x, int y, int width, int height, const char *text, float size, bool wrap, Color color, const char *font) : Object(x, y, width, height)
 {
 	this->text = text;
 	this->size = size;
 	this->color = color;
 	this->font = LoadFont(font);
+	this->wrap = wrap;
 	SetTextureFilter(this->font.texture, TEXTURE_FILTER_BILINEAR);
 };
 
@@ -14,7 +15,7 @@ void Text::draw()
 	Object::draw();
 
 	DrawTextBoxedSelectable(
-	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, true, color, 0, 0, BLUE, BLUE
+	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, wrap, color, 0, 0, BLUE, BLUE
 	);
 };
 

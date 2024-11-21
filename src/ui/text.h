@@ -11,8 +11,9 @@ public:
 	float size;
 	Color color;
 	Font font;
+	bool wrap = true;
 	Text(
-	    int x, int y, int width, int height, const char *text, float size = 20.0f, Color color = WHITE, const char *font = DEFAULTFONT
+	    int x, int y, int width, int height, const char *text, float size = 20.0f, bool wrap = true, Color color = WHITE, const char *font = DEFAULTFONT
 	);
 
 	void draw();

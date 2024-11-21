@@ -1,6 +1,6 @@
 #include "object.h"
 
-Object::Object(int x, int y, int width, int height)
+Object::Object(float x, float y, float width, float height)
 {
 	this->x = x;
 	this->y = y;
@@ -13,6 +13,7 @@ Object::Object(int x, int y, int width, int height)
 void Object::add(Object *child)
 {
 	children.push_back(child);
+	child->parent = this;
 };
 void Object::remove(Object *child)
 {
@@ -29,6 +30,7 @@ void Object::update(float elapsed)
 	Vector2 mousePosition = GetMousePosition();
 
 	isHovering = mousePosition.x == Clamp(mousePosition.x, x, x + width) && mousePosition.y == Clamp(mousePosition.y, y, y + height);
+	if (isHovering && hoverable) parent->isHovering = false;
 	for (auto child : children)
 	{
 		child->x += x;

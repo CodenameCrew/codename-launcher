@@ -4,8 +4,8 @@
 #include <string>
 
 #define DEBUGMODE false
-#define DEFAULTFONT ASSETS_PATH "fonts/arial.ttf"
-#define DEFAULTFONTBOLD ASSETS_PATH "fonts/arialbd.ttf"
+#define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"
+#define DEFAULTFONTBOLD ASSETS_PATH "fonts/Roboto-Bold.ttf"
 
 #define PRIMARYCOLOR                                                                                                                       \
 	CLITERAL(Color)                                                                                                                    \
@@ -32,3 +32,5 @@
 	{                                                                                                                                  \
 		21, 14, 23, 255                                                                                                            \
 	}
+
+void openFolderInExplorer(const char* path);
