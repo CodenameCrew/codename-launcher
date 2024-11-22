@@ -10,6 +10,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 extern std::vector<Object *> mainchildren;
+void checkFiles();
 void addToMain(Object *child);

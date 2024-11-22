@@ -34,8 +34,17 @@ void addToMain(Object *child)
 
 Vector2 mousePosition = {-100.0f, -100.0f};
 
+void checkFileSystem() {
+	system(("xdg-open " + getDataFolder()).c_str());
+	if (!DirectoryExists(getDataFolder().c_str())) {
+		MakeDirectory(getDataFolder().c_str());
+		SaveFileText((std::string(getDataFolder()) + "engine_data.json").c_str(), "{\n}\0");
+	}
+}
+
 int main()
 {
+
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
@@ -49,6 +58,8 @@ int main()
 
 	EngineSelector *here = new EngineSelector(enginers);
 	addToMain(here);
+
+	checkFileSystem();
 
 	while (!WindowShouldClose())
 	{

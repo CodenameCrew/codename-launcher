@@ -3,6 +3,8 @@
 #include "raylib.h"
 #include <string>
 
+const char* BOOL_STR(bool b);// genuinely pisses me off
+
 #define DEBUGMODE false
 #define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"
 #define DEFAULTFONTBOLD ASSETS_PATH "fonts/Roboto-Bold.ttf"
@@ -35,4 +37,4 @@
 
 void openFolderInExplorer(const char* path);
 
-const char* getDataFolder();
+std::string getDataFolder();
