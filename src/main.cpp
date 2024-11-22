@@ -34,9 +34,11 @@ void addToMain(Object *child)
 
 Vector2 mousePosition = {-100.0f, -100.0f};
 
-void checkFileSystem() {
+void checkFileSystem()
+{
 	system(("xdg-open " + getDataFolder()).c_str());
-	if (!DirectoryExists(getDataFolder().c_str())) {
+	if (!DirectoryExists(getDataFolder().c_str()))
+	{
 		MakeDirectory(getDataFolder().c_str());
 		SaveFileText((std::string(getDataFolder()) + "engine_data.json").c_str(), "{\n}\0");
 	}
@@ -48,7 +50,7 @@ int main()
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
-	std::vector<Engine*> enginers = {};
+	std::vector<Engine *> enginers = {};
 	enginers.push_back(new Engine("Codename engine", ".", "1.0.0", "codename.png"));
 	enginers.push_back(new Engine("CNE Dev", ".", "dev.0.0", "codename.png"));
 	enginers.push_back(new Engine("Psych engine", ".", "0.7.3", "psych.png"));
@@ -64,10 +66,12 @@ int main()
 	while (!WindowShouldClose())
 	{
 		mousePosition = GetMousePosition();
+		curCursorState = 1;
 		for (auto child : mainchildren)
 		{
 			child->update(GetFrameTime());
 		}
+		SetMouseCursor(curCursorState);
 
 		BeginDrawing();
 		ClearBackground(BACKGROUNDPRIMARYCOLOR);

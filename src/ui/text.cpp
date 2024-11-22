@@ -1,6 +1,7 @@
 #include "text.h"
 
-Text::Text(int x, int y, int width, int height, const char *text, float size, bool wrap, Color color, const char *font) : Object(x, y, width, height)
+Text::Text(int x, int y, int width, int height, const char *text, float size, bool wrap, Color color, const char *font)
+    : Object(x, y, width, height)
 {
 	this->text = text;
 	this->size = size;
@@ -145,8 +146,10 @@ void Text::DrawTextBoxedSelectable(
 				{
 					DrawRectangleRec(
 					    Rectangle{
-						rec.x + textOffsetX - 1, rec.y + textOffsetY, glyphWidth, (float)font.baseSize * scaleFactor
-					    },
+						rec.x + textOffsetX - 1,
+						rec.y + textOffsetY,
+						glyphWidth,
+						(float)font.baseSize * scaleFactor},
 					    selectBackTint
 					);
 					isGlyphSelected = true;

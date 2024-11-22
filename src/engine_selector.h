@@ -1,31 +1,12 @@
 #pragma once
 
+#include "engine.h"
+#include "main.h"
 #include "raylib.h"
-#include "ui/container.h"
 #include "ui/button.h"
+#include "ui/container.h"
 #include "ui/sprite.h"
 #include "ui/text.h"
-#include "main.h"
-
-class Engine {
-	public:
-	const char *name;
-
-	const char *path;
-	const char *modsPath;
-	const char *addonsPath;
-	const char *iconPath;
-
-	const char *version;
-
-	Engine(const char* name, const char* path, const char* version, const char* iconPath);
-
-	void approximateEngine();
-
-	void detectModsFolder();
-
-	void detectAddonsFolder();
-};
 
 class EngineContainer : public Button
 {
@@ -50,11 +31,11 @@ class EngineSelector : public Container
 public:
 	Button *addbutton;
 
-	EngineSelector(std::vector<Engine*> enginelist);
+	EngineSelector(std::vector<Engine *> enginelist);
 
 	void update(float elapsed);
 
 	void draw();
-	
-	void add(Object* child);
+
+	void add(Object *child);
 };

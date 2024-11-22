@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <string>
 
-const char* BOOL_STR(bool b);// genuinely pisses me off
+const char *BOOL_STR(bool b); // genuinely pisses me off
 
 #define DEBUGMODE false
 #define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"
@@ -35,6 +35,8 @@ const char* BOOL_STR(bool b);// genuinely pisses me off
 		21, 14, 23, 255                                                                                                            \
 	}
 
-void openFolderInExplorer(const char* path);
+void openFolderInExplorer(const char *path);
 
 std::string getDataFolder();
+
+extern int curCursorState;

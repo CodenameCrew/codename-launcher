@@ -16,6 +16,7 @@ void Button::update(float elapsed)
 	if (isHovering)
 	{
 		tint = 0.1f;
+		curCursorState = 4;
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
 			clickCallback();
