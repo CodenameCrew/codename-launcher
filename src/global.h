@@ -34,3 +34,5 @@
 	}
 
 void openFolderInExplorer(const char* path);
+
+const char* getDataFolder();

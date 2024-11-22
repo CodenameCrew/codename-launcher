@@ -30,7 +30,7 @@ void Object::update(float elapsed)
 	Vector2 mousePosition = GetMousePosition();
 
 	isHovering = mousePosition.x == Clamp(mousePosition.x, x, x + width) && mousePosition.y == Clamp(mousePosition.y, y, y + height);
-	if (isHovering && hoverable) parent->isHovering = false;
+	if (parent != nullptr && isHovering && hoverable) parent->isHovering = false;
 	for (auto child : children)
 	{
 		child->x += x;

@@ -2,14 +2,23 @@
 
 #if defined(__linux__)
 void openFolderInExplorer(const char* path) {
-	system("xdg-open .");
+	system(("xdg-open \"" + std::string(path) + "\"").c_str());
+}
+const char* getDataFolder() {
+	return "~/.config/codename-launcher/";
 }
 #elif defined(_WIN32)
 void openFolderInExplorer(const char* path) {
-	system("explorer ./");
+	system(("explorer \"" + std::string(path) + "\"").c_str());
+}
+const char* getDataFolder() {
+	return getenv("LOCALAPPDATA") + "/CodenameLauncher";
 }
 #elif defined(__APPLE__)
 void openFolderInExplorer(const char* path) {
-	system("open .");
+	system(("open \"" + std::string(path) + "\"").c_str());
+}
+const char* getDataFolder() {
+	return "~/Library/Application Support/Codename Launcher/";
 }
 #endif

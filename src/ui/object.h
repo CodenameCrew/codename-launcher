@@ -12,7 +12,7 @@ public:
 	float y = 0;
 	float width = 0;
 	float height = 0;
-	Object* parent;
+	Object* parent = nullptr;
 
 	Color color = {255, 255, 255, 255};
 
