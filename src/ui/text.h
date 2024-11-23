@@ -6,24 +6,29 @@
 
 class Text : public Object
 {
-public:
+private:
 	std::string text;
+public:
 	float size;
 	Color color;
 	Font font;
 	bool wrap = true;
+	bool autoWidth;
+	bool autoHeight;
 	Text(
 	    int x,
 	    int y,
-	    int width,
-	    int height,
-	    std::string text,
+		std::string text,
+	    int width = 0,
+	    int height = 0,
 	    float size = 20.0f,
 	    bool wrap = true,
 	    Color color = WHITE,
 	    std::string font = DEFAULTFONT
 	);
 
+	void setText(std::string newText);
+	std::string getText() {return text;};
 	void draw();
 	void DrawTextBoxedSelectable(
 	    Font font,

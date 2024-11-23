@@ -26,9 +26,9 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 	    new Sprite(15, 7, LoadTexture(((std::string)(ASSETS_PATH "engine_icons/") + (std::string)(this->engine->iconPath)).c_str()));
 	spriteIcon->scale = 60.0f / spriteIcon->width;
 	add(spriteIcon);
-	textName = new Text(90, 17, 200, 25, name, 24.0f, false, WHITE, DEFAULTFONTBOLD);
+	textName = new Text(90, 17, name, 0, 0, 24.0f, false, WHITE, DEFAULTFONTBOLD);
 	add(textName);
-	textVersion = new Text(90, 40, 200, 40, version, 18.0f, true, {255, 255, 255, 178}, DEFAULTFONT);
+	textVersion = new Text(90, 40, version, 200, 35, 18.0f, true, {255, 255, 255, 178}, DEFAULTFONT);
 	add(textVersion);
 
 	openToLocation = new Button(300, 20, 35, 35, SECONDARYCOLOR);
@@ -55,7 +55,7 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 	}
 
 	Button *addengine = new Button(50, 660, 400, 35, PRIMARYCOLOR);
-	Text *addenginetext = new Text(50, 7.5, 200, 50, "Add engine", 20.0f, true, WHITE, DEFAULTFONTBOLD);
+	Text *addenginetext = new Text(50, 7.5, "Add engine", 0, 0, 20.0f, true, WHITE, DEFAULTFONTBOLD);
 	addengine->add(addenginetext);
 	addToMain(addengine);
 }

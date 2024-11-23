@@ -1,6 +1,6 @@
 #include "text.h"
 
-Text::Text(int x, int y, int width, int height, std::string text, float size, bool wrap, Color color, std::string font)
+Text::Text(int x, int y, std::string text, int width, int height, float size, bool wrap, Color color, std::string font)
     : Object(x, y, width, height)
 {
 	this->text = text;
@@ -8,7 +8,15 @@ Text::Text(int x, int y, int width, int height, std::string text, float size, bo
 	this->color = color;
 	this->font = LoadFontEx(font.c_str(), int(size), NULL, 0);
 	this->wrap = wrap;
+
+	Vector2 sizeMeasurement = MeasureTextEx(this->font, text.c_str(), this->size, 0.5f);
+	if (autoWidth = this->width == 0)
+		this->width = sizeMeasurement.x;
+	if (autoHeight = this->height == 0)
+		this->height = sizeMeasurement.y;
 	SetTextureFilter(this->font.texture, TEXTURE_FILTER_BILINEAR);
+
+	SetTextLineSpacing(0);
 };
 
 void Text::draw()
@@ -19,6 +27,15 @@ void Text::draw()
 	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, wrap, color, 0, 0, BLUE, BLUE
 	);
 };
+
+void Text::setText(std::string text) {
+	this->text = text;
+	Vector2 sizeMeasurement = MeasureTextEx(this->font, this->text.c_str(), this->size, 0.5f);
+	if (autoWidth)
+		this->width = sizeMeasurement.x;
+	if (autoHeight)
+		this->height = sizeMeasurement.y;
+}
 
 void Text::DrawTextBoxedSelectable(
     Font font,
@@ -170,7 +187,7 @@ void Text::DrawTextBoxedSelectable(
 
 			if (wordWrap && (i == endLine))
 			{
-				textOffsetY += (font.baseSize + font.baseSize / 2) * scaleFactor;
+				textOffsetY += (font.baseSize + font.baseSize / 2) * scaleFactor / 2;
 				textOffsetX = 0;
 				startLine = endLine;
 				endLine = -1;

@@ -60,7 +60,7 @@ int main()
 	enginers.push_back(new Engine("Psych engine", ".", "0.7.3", "psych.png"));
 	enginers.push_back(new Engine("Psych engine", ".", "github branch: dev", "psych.png"));
 	enginers.push_back(new Engine("FPS Plus engine", ".", "6.0.1", "fpsplus.png"));
-	enginers.push_back(new Engine("OS engine", ".", "v2", "unknown.png"));
+	enginers.push_back(new Engine("OS engine", ".", "trash trash trash trash trash trash trash trash trash trash ", "unknown.png"));
 
 	EngineOverview *there = new EngineOverview(enginers.front());
 	addToMain(there);
