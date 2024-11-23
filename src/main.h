@@ -8,6 +8,7 @@
 #include "ui/container.h"
 #include "ui/sprite.h"
 #include "ui/text.h"
+#include "rapidjson.h"
 #include <math.h>
 #include <stdio.h>
 #include <string>
