@@ -21,7 +21,7 @@ EngineOverview::EngineOverview(Engine *engine) : Container(500, 30, 500, 600)
 void EngineOverview::changeEngine(Engine newEngine) {
     engine = &newEngine;
     //engineIcon->texture = LoadTexture(((std::string)(ASSETS_PATH "engine_icons/") + (std::string)(engine->iconPath)).c_str());
-    engineName->text = newEngine.name;
-    description->text = newEngine.description;
+    engineName->text = newEngine.name.c_str();
+    description->text = newEngine.description.c_str();
 };
 #pragma endregion

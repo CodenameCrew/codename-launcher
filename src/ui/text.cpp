@@ -1,12 +1,12 @@
 #include "text.h"
 
-Text::Text(int x, int y, int width, int height, const char *text, float size, bool wrap, Color color, const char *font)
+Text::Text(int x, int y, int width, int height, std::string text, float size, bool wrap, Color color, std::string font)
     : Object(x, y, width, height)
 {
 	this->text = text;
 	this->size = size;
 	this->color = color;
-	this->font = LoadFontEx(font, int(size), NULL, 0);
+	this->font = LoadFontEx(font.c_str(), int(size), NULL, 0);
 	this->wrap = wrap;
 	SetTextureFilter(this->font.texture, TEXTURE_FILTER_BILINEAR);
 };
@@ -22,7 +22,7 @@ void Text::draw()
 
 void Text::DrawTextBoxedSelectable(
     Font font,
-    const char *text,
+    std::string text,
     Rectangle rec,
     float fontSize,
     float spacing,
@@ -34,7 +34,7 @@ void Text::DrawTextBoxedSelectable(
     Color selectBackTint
 )
 {
-	unsigned int length = TextLength(text); // Total length in bytes of the text, scanned by codepoints in loop
+	unsigned int length = TextLength(text.c_str()); // Total length in bytes of the text, scanned by codepoints in loop
 
 	float textOffsetY = 0;	  // Offset between lines (on line break '\n')
 	float textOffsetX = 0.0f; // Offset X to next character to draw

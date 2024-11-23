@@ -2,7 +2,7 @@
 
 // Engine
 #pragma region Engine
-Engine::Engine(const char *name, const char *path, const char *version, const char *iconPath)
+Engine::Engine(std::string name, std::string path, std::string version, std::string iconPath)
 {
 	this->name = name;
 	this->path = path;
@@ -18,9 +18,9 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 {
 	this->engine = engine;
 
-	name = this->engine->name;
-	path = this->engine->path;
-	version = this->engine->version;
+	name = this->engine->name.c_str();
+	path = this->engine->path.c_str();
+	version = this->engine->version.c_str();
 
 	spriteIcon =
 	    new Sprite(15, 7, LoadTexture(((std::string)(ASSETS_PATH "engine_icons/") + (std::string)(this->engine->iconPath)).c_str()));
@@ -48,7 +48,7 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 	for (Engine *engine : enginelist)
 	{
 		EngineContainer *enginecontainer = new EngineContainer(engine);
-		enginecontainer->clickCallback = [&]{
+		enginecontainer->clickCallback = [=]{
 			engineOverview->changeEngine(*engine);
 		};
 		add(enginecontainer);

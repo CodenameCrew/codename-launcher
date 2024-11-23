@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 enum ModType
 {
@@ -9,33 +10,33 @@ enum ModType
 
 struct Mod
 {
-	const char *name;
-	const char *rawName;
-	const char *version;
-	const char *description;
+	std::string name;
+	std::string rawName;
+	std::string version;
+	std::string description;
 
 	ModType type = MOD;
 
-	const char *pageLink;
+	std::string pageLink;
 };
 
 class Engine
 {
 public:
-	const char *name;
-	const char *description;
+	std::string name;
+	std::string description;
 
-	const char *rawName;
-	const char *path;
-	const char *modsPath;
-	const char *addonsPath;
-	const char *iconPath;
+	std::string rawName;
+	std::string path;
+	std::string modsPath;
+	std::string addonsPath;
+	std::string iconPath;
 
-	const char *version;
+	std::string version;
 
 	const std::vector<Mod> mods = {};
 
-	Engine(const char *name, const char *path, const char *version, const char *iconPath);
+	Engine(std::string name, std::string path, std::string version, std::string iconPath);
 
 	void approximateEngine();
 

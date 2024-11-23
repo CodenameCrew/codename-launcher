@@ -7,7 +7,7 @@
 class Text : public Object
 {
 public:
-	const char *text;
+	std::string text;
 	float size;
 	Color color;
 	Font font;
@@ -17,17 +17,17 @@ public:
 	    int y,
 	    int width,
 	    int height,
-	    const char *text,
+	    std::string text,
 	    float size = 20.0f,
 	    bool wrap = true,
 	    Color color = WHITE,
-	    const char *font = DEFAULTFONT
+	    std::string font = DEFAULTFONT
 	);
 
 	void draw();
 	void DrawTextBoxedSelectable(
 	    Font font,
-	    const char *text,
+	    std::string text,
 	    Rectangle rec,
 	    float fontSize,
 	    float spacing,
