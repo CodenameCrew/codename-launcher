@@ -9,6 +9,7 @@
 #include "ui/sprite.h"
 #include "ui/text.h"
 #include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
 #include <math.h>
 #include <stdio.h>
 #include <string>

@@ -40,16 +40,24 @@ void checkFileSystem()
 	if (!DirectoryExists(getDataFolder().c_str()))
 	{
 		MakeDirectory(getDataFolder().c_str());
-		SaveFileText((std::string(getDataFolder()) + "engine_data.json").c_str(), "{\n}\0");
+		SaveFileText((getDataFolder() + "engine_data.json").c_str(), "{\n}\0");
 	}
 }
 
 void parseEngines() {
-	
+	const char* rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
+	rapidjson::Document *json;
+	json->Parse(rawJson);
+	for (rapidjson::Value::ConstValueIterator it = json->Begin(); it != json->End(); ++it) {
+		auto string = (*it)["name"].GetString();
+		TraceLog(LOG_INFO, string);
+	}
 }
 
 int main()
 {
+	checkFileSystem();
+	parseEngines();
 
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
@@ -67,8 +75,6 @@ int main()
 
 	EngineSelector *here = new EngineSelector(enginers, there);
 	addToMain(here);
-
-	checkFileSystem();
 
 	while (!WindowShouldClose())
 	{
