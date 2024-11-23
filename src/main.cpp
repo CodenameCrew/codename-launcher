@@ -46,10 +46,10 @@ void checkFileSystem()
 
 void parseEngines() {
 	const char* rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
-	rapidjson::Document *json;
-	json->Parse(rawJson);
-	for (rapidjson::Value::ConstValueIterator it = json->Begin(); it != json->End(); ++it) {
-		auto string = (*it)["name"].GetString();
+	rapidjson::Document json;
+	json.Parse(rawJson);
+	for (auto &item : json.GetObject()) {
+		auto string = item.name.GetString();
 		TraceLog(LOG_INFO, string);
 	}
 }
