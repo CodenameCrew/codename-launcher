@@ -36,7 +36,7 @@ Vector2 mousePosition = {-100.0f, -100.0f};
 
 void checkFileSystem()
 {
-	system(("xdg-open " + getDataFolder()).c_str());
+	openFolderInExplorer(getDataFolder().c_str());
 	if (!DirectoryExists(getDataFolder().c_str()))
 	{
 		MakeDirectory(getDataFolder().c_str());
