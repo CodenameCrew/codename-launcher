@@ -38,3 +38,8 @@ cmake_install.cmake
 *.res
 *.sdf
 codename_launcher
+
+# Rapid json stuffs
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+googletest/

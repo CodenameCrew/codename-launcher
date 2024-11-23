@@ -28,29 +28,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(nfd)
 
- 	
-
-# Download RapidJSON
-FetchContent_Declare(
-    rapidjson
-    PREFIX "vendor/rapidjson"
-    GIT_REPOSITORY "https://github.com/Tencent/rapidjson.git"
-    GIT_TAG f54b0e47a08782a6131cc3d60f94d038fa6e0a51
-    TIMEOUT 10
-    CMAKE_ARGS
-        -DRAPIDJSON_BUILD_TESTS=OFF
-        -DRAPIDJSON_BUILD_DOC=OFF
-        -DRAPIDJSON_BUILD_EXAMPLES=OFF
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-    UPDATE_COMMAND ""
-)
-
-# Prepare RapidJSON (RapidJSON is a header-only library)
-FetchContent_MakeAvailable(rapidjson source_dir)
-set(RAPIDJSON_INCLUDE_DIR ${source_dir}/include)
-
 # Adding our source files
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp") # Define PROJECT_SOURCES as a list of all source files
 set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/") # Define PROJECT_INCLUDE to be the path to the include directory of the project
@@ -58,7 +35,9 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/") # Define PROJECT_INCLUDE t
 # Declaring our executable
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${PROJECT_INCLUDE}
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 # Setting ASSETS_PATH

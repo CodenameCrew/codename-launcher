@@ -10,3 +10,5 @@
 
 *.h linguist-language=cpp
 *.cpp linguist-language=cpp
+
+src/rapidjson/* linguist-vendored

@@ -10,9 +10,11 @@ Text::Text(int x, int y, std::string text, int width, int height, float size, bo
 	this->wrap = wrap;
 
 	Vector2 sizeMeasurement = MeasureTextEx(this->font, text.c_str(), this->size, 0.5f);
-	if (autoWidth = this->width == 0)
+	autoWidth = (this->width == 0);
+	autoHeight = (this->height == 0);
+	if (autoWidth)
 		this->width = sizeMeasurement.x;
-	if (autoHeight = this->height == 0)
+	if (autoHeight)
 		this->height = sizeMeasurement.y;
 	SetTextureFilter(this->font.texture, TEXTURE_FILTER_BILINEAR);
 
