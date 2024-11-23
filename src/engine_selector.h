@@ -30,8 +30,9 @@ class EngineSelector : public Container
 {
 public:
 	Button *addbutton;
+	EngineOverview *engineOverview;
 
-	EngineSelector(std::vector<Engine *> enginelist);
+	EngineSelector(std::vector<Engine *> enginelist, EngineOverview *engineOverview);
 
 	void update(float elapsed);
 

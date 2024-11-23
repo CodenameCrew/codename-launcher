@@ -1,5 +1,6 @@
 #pragma once
 
+#include "engine_overview.h"
 #include "engine_selector.h"
 #include "global.h"
 #include "raylib.h"
@@ -14,4 +15,5 @@
 
 extern std::vector<Object *> mainchildren;
 void checkFiles();
+void parseEngines();
 void addToMain(Object *child);

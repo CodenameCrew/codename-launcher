@@ -1,12 +1,13 @@
+#include "engine.h"
+#include "global.h"
 #include "ui/button.h"
 #include "ui/container.h"
-#include "engine.h"
 #include "ui/sprite.h"
 #include "ui/text.h"
-#include "global.h"
 
 class EngineOverview : public Container
 {
+public:
 	Sprite *engineIcon;
 	Text *engineName;
 	Text *description;
@@ -16,5 +17,5 @@ class EngineOverview : public Container
 
 	EngineOverview(Engine *engine);
 
-	void changeEngine(Engine *newEngine);
+	void changeEngine(Engine newEngine);
 };

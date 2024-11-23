@@ -5,7 +5,7 @@
 
 const char *BOOL_STR(bool b); // genuinely pisses me off
 
-#define DEBUGMODE false
+#define DEBUGMODE true
 #define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"
 #define DEFAULTFONTBOLD ASSETS_PATH "fonts/Roboto-Bold.ttf"
 

@@ -6,7 +6,7 @@ Text::Text(int x, int y, int width, int height, const char *text, float size, bo
 	this->text = text;
 	this->size = size;
 	this->color = color;
-	this->font = LoadFont(font);
+	this->font = LoadFontEx(font, int(size), NULL, 0);
 	this->wrap = wrap;
 	SetTextureFilter(this->font.texture, TEXTURE_FILTER_BILINEAR);
 };

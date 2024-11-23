@@ -44,10 +44,14 @@ void checkFileSystem()
 	}
 }
 
+void parseEngines() {
+
+}
+
 int main()
 {
 
-	SetConfigFlags(FLAG_VSYNC_HINT);
+	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
 	std::vector<Engine *> enginers = {};
@@ -58,7 +62,10 @@ int main()
 	enginers.push_back(new Engine("FPS Plus engine", ".", "6.0.1", "fpsplus.png"));
 	enginers.push_back(new Engine("OS engine", ".", "v2", "unknown.png"));
 
-	EngineSelector *here = new EngineSelector(enginers);
+	EngineOverview *there = new EngineOverview(enginers.front());
+	addToMain(there);
+
+	EngineSelector *here = new EngineSelector(enginers, there);
 	addToMain(here);
 
 	checkFileSystem();

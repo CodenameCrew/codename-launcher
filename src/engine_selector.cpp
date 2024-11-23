@@ -24,6 +24,7 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 
 	spriteIcon =
 	    new Sprite(15, 7, LoadTexture(((std::string)(ASSETS_PATH "engine_icons/") + (std::string)(this->engine->iconPath)).c_str()));
+	spriteIcon->scale = 60.0f / spriteIcon->width;
 	add(spriteIcon);
 	textName = new Text(90, 17, 200, 25, name, 24.0f, false, WHITE, DEFAULTFONTBOLD);
 	add(textName);
@@ -40,11 +41,16 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 
 // EngineSelector
 #pragma region EngineSelector
-EngineSelector::EngineSelector(std::vector<Engine *> enginelist) : Container(50, 50, 400, 600)
+EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview *engineOverview) : Container(50, 50, 400, 600)
 {
+	this->engineOverview = engineOverview;
+
 	for (Engine *engine : enginelist)
 	{
 		EngineContainer *enginecontainer = new EngineContainer(engine);
+		enginecontainer->clickCallback = [&]{
+			engineOverview->changeEngine(*engine);
+		};
 		add(enginecontainer);
 	}
 
