@@ -1,16 +1,5 @@
 #include "engine_selector.h"
 
-// Engine
-#pragma region Engine
-Engine::Engine(std::string name, std::string path, std::string version, std::string iconPath)
-{
-	this->name = name;
-	this->path = path;
-	this->version = version;
-	this->iconPath = iconPath;
-};
-
-#pragma endregion
 
 // EngineContainer
 #pragma region EngineContainer

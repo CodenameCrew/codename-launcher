@@ -36,11 +36,10 @@ Vector2 mousePosition = {-100.0f, -100.0f};
 
 void checkFileSystem()
 {
-	openFolderInExplorer(getDataFolder().c_str());
 	if (!DirectoryExists(getDataFolder().c_str()))
 	{
 		MakeDirectory(getDataFolder().c_str());
-		SaveFileText((getDataFolder() + "engine_data.json").c_str(), "{\n}\0");
+		SaveFileText(getPath("engine_data.json").c_str(), "{\n}\0");
 	}
 }
 
@@ -57,18 +56,16 @@ void parseEngines() {
 int main()
 {
 	checkFileSystem();
-	parseEngines();
+	//parseEngines();
 
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
 	std::vector<Engine *> enginers = {};
-	enginers.push_back(new Engine("Codename engine", ".", "1.0.0", "codename.png"));
-	enginers.push_back(new Engine("CNE Dev", ".", "dev.0.0", "codename.png"));
-	enginers.push_back(new Engine("Psych engine", ".", "0.7.3", "psych.png"));
-	enginers.push_back(new Engine("Psych engine", ".", "github branch: dev", "psych.png"));
-	enginers.push_back(new Engine("FPS Plus engine", ".", "6.0.1", "fpsplus.png"));
-	enginers.push_back(new Engine("OS engine", ".", "trash trash trash trash trash trash trash trash trash trash ", "unknown.png"));
+	enginers.push_back(new Engine("Codename engine", getPath("CodenameEngine"), "1.0.0", "codename.png"));
+	enginers.push_back(new Engine("CNE Dev", getPath("build-for-devs 2"), "dev.0.0", "codename.png"));
+	enginers.push_back(new Engine("Psych engine", getPath("PsychEngine"), "0.7.3", "psych.png"));
+	enginers.push_back(new Engine("FPS Plus engine", getPath("FPS Plus"), "6.0.1", "fpsplus.png"));
 
 	EngineOverview *there = new EngineOverview(enginers.front());
 	addToMain(there);

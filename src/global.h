@@ -38,5 +38,7 @@ const char *BOOL_STR(bool b); // genuinely pisses me off
 void openFolderInExplorer(const char *path);
 
 std::string getDataFolder();
+std::string getPath(std::string path);
+std::string findExecutable(std::string searchPath);
 
 extern int curCursorState;
