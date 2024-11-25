@@ -5,7 +5,7 @@
 
 const char *BOOL_STR(bool b); // genuinely pisses me off
 
-#define DEBUGMODE true
+#define DEBUGMODE false
 #define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"
 #define DEFAULTFONTBOLD ASSETS_PATH "fonts/Roboto-Bold.ttf"
 
@@ -40,5 +40,7 @@ void openFolderInExplorer(const char *path);
 std::string getDataFolder();
 std::string getPath(std::string path);
 std::string findExecutable(std::string searchPath);
+
+void executeProgram(std::string path, bool allocateConsole);
 
 extern int curCursorState;

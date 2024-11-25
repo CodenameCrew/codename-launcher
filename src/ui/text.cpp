@@ -1,6 +1,6 @@
 #include "text.h"
 
-Text::Text(int x, int y, std::string text, int width, int height, float size, bool wrap, Color color, std::string font)
+Text::Text(float x, float y, std::string text, float width, float height, float size, bool wrap, Color color, std::string font)
     : Object(x, y, width, height)
 {
 	this->text = text;
@@ -68,11 +68,11 @@ void Text::DrawTextBoxedSelectable(
 	};
 	int state = wordWrap ? MEASURE_STATE : DRAW_STATE;
 
-	int startLine = -1; // Index where to begin drawing (where a line begins)
-	int endLine = -1;   // Index where to stop drawing (where a line ends)
-	int lastk = -1;	    // Holds last value of the character position
+	unsigned int startLine = -1; // Index where to begin drawing (where a line begins)
+	unsigned int endLine = -1;   // Index where to stop drawing (where a line ends)
+	unsigned int lastk = -1;	    // Holds last value of the character position
 
-	for (int i = 0, k = 0; i < length; i++, k++)
+	for (unsigned int i = 0, k = 0; i < length; i++, k++)
 	{
 		// Get next codepoint from byte string and glyph index in font
 		int codepointByteCount = 0;

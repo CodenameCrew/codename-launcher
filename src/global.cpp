@@ -16,7 +16,11 @@ std::string getDataFolder()
 	homedir.append("/.config/codename-launcher/");
 	return homedir;
 }
+void executeProgram(std::string path, bool allocateConsole) {
+	system(("systemd-run \"" + path + "\"").c_str());
+}
 #elif defined(_WIN32)
+#include "winapi.h"
 void openFolderInExplorer(const char *path)
 {
 	system(("explorer \"" + std::string(path) + "\"").c_str());
@@ -26,6 +30,9 @@ std::string getDataFolder()
 	std::string appdatadir = getenv("LOCALAPPDATA");
 	appdatadir.append("\\CodenameLauncher");
 	return appdatadir;
+}
+void executeProgram(std::string path) {
+	system(("systemd-run \"" + path + "\"").c_str());
 }
 #elif defined(__APPLE__)
 void openFolderInExplorer(const char *path)

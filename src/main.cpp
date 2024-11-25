@@ -62,10 +62,61 @@ int main()
 	InitWindow(1280, 720, "Hello Raylib");
 
 	std::vector<Engine *> enginers = {};
-	enginers.push_back(new Engine("Codename engine", getPath("CodenameEngine"), "1.0.0", "codename.png"));
-	enginers.push_back(new Engine("CNE Dev", getPath("build-for-devs 2"), "dev.0.0", "codename.png"));
-	enginers.push_back(new Engine("Psych engine", getPath("PsychEngine"), "0.7.3", "psych.png"));
-	enginers.push_back(new Engine("FPS Plus engine", getPath("FPS Plus"), "6.0.1", "fpsplus.png"));
+	enginers.push_back(
+		new Engine(
+			"Codename engine", 
+			"this engine is awful",
+			"CodenameEngine",
+			getPath("CodenameEngine"),
+			"codename.png", 
+			"1.0.0",
+			CODENAME,
+			getPath("CodenameEngine/mods"),
+			getPath("CodenameEngine/addons"),
+			"./CodenameEngine --m pj-party"
+		)
+	);
+	enginers.push_back(
+		new Engine(
+			"CNE Dev", 
+			"this engine is awful for developers",
+			"CodenameEngine",
+			getPath("build-for-devs 2"),
+			"codename.png", 
+			"dev",
+			CODENAME,
+			getPath("build-for-devs 2/mods"),
+			getPath("build-for-devs 2/addons")
+		)
+	);
+	enginers.push_back(
+		new Engine(
+			"Psych engine", 
+			"this engine is actually good",
+			"PsychEngine.exe",
+			getPath("PsychEngine"),
+			"psych.png", 
+			"1.0.3",
+			PSYCH,
+			getPath("PsychEngine/mods"),
+			getPath("PsychEngine/addons"),
+			"wine ./PsychEngine.exe"
+		)
+	);
+	enginers.push_back(
+		new Engine(
+			"FPS Plus engine", 
+			"i lowkey hate this mfing engine actually",
+			"FunkinFPSPlus.exe",
+			getPath("FPS Plus"),
+			"fpsplus.png", 
+			"6.0.idk anymore",
+			FPSPLUS,
+			getPath("FPS Plus/mods"),
+			getPath("FPS Plus/addons"),
+			"wine ./FunkinFPSPlus.exe"
+		)
+	);
 
 	EngineOverview *there = new EngineOverview(enginers.front());
 	addToMain(there);

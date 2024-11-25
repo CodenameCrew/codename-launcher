@@ -44,14 +44,15 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 	}
 
 	Button *addengine = new Button(50, 660, 400, 35, PRIMARYCOLOR);
-	Text *addenginetext = new Text(50, 7.5, "Add engine", 0, 0, 20.0f, true, WHITE, DEFAULTFONTBOLD);
+	Text *addenginetext = new Text(50, 7.5, "+ Add engine", 0, 0, 20.0f, true, WHITE, DEFAULTFONTBOLD);
+	addenginetext->x = (addengine->width - addenginetext->width) / 2;
 	addengine->add(addenginetext);
 	addToMain(addengine);
 }
 
 void EngineSelector::update(float elapsed)
 {
-	int addY = 0;
+	float addY = 0;
 	for (auto child : children)
 	{
 		child->y = addY;
@@ -63,7 +64,7 @@ void EngineSelector::update(float elapsed)
 
 void EngineSelector::draw()
 {
-	DrawRectangle(x, y, width, height, LISTCOLOR);
+	DrawRectangleRec(Rectangle{x, y, width, height}, LISTCOLOR);
 	DrawRectangleLinesEx(Rectangle{x, y, width, height}, 2.0f, GetColor(0x00000033));
 
 	Container::draw();

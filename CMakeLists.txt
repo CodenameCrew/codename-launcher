@@ -61,12 +61,14 @@ function(enable_cxx_compiler_flag_if_supported flag)
 endfunction()
 
 enable_cxx_compiler_flag_if_supported("-Wall")
+enable_cxx_compiler_flag_if_supported("-Wno-unknown-pragmas")
+enable_cxx_compiler_flag_if_supported("-Wno-write-strings")
 enable_cxx_compiler_flag_if_supported("-pedantic")
 enable_cxx_compiler_flag_if_supported("-fsanitize=address,undefined")
 enable_cxx_compiler_flag_if_supported("-fsanitize=thread")
 
 # enable_cxx_compiler_flag_if_supported("-Wshadow") # Disabled due to classes and fields being named the same thing just with different capitalization
-enable_cxx_compiler_flag_if_supported("-Wconversion")
+# enable_cxx_compiler_flag_if_supported("-Wconversion")
 enable_cxx_compiler_flag_if_supported("-Wnon-virtual-dtor")
 enable_cxx_compiler_flag_if_supported("-Woverloaded-virtual")
 enable_cxx_compiler_flag_if_supported("-Wunused")

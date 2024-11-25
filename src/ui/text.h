@@ -16,11 +16,11 @@ public:
 	bool autoWidth;
 	bool autoHeight;
 	Text(
-	    int x,
-	    int y,
+	    float x,
+	    float y,
 		std::string text,
-	    int width = 0,
-	    int height = 0,
+	    float width = 0,
+	    float height = 0,
 	    float size = 20.0f,
 	    bool wrap = true,
 	    Color color = WHITE,
