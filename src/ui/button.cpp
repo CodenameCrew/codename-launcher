@@ -19,7 +19,8 @@ void Button::update(float elapsed)
 		curCursorState = 4;
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
-			if (clickCallback) clickCallback();
+			if (clickCallback)
+				clickCallback();
 		}
 	}
 	else

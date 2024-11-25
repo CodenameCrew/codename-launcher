@@ -1,7 +1,7 @@
 #pragma once
 #include "global.h"
-#include <vector>
 #include <string>
+#include <vector>
 
 enum ModType
 {
@@ -9,7 +9,8 @@ enum ModType
 	ADDON
 };
 
-enum EngineType {
+enum EngineType
+{
 	PSYCH,
 	CODENAME,
 	VSLICE,
@@ -18,26 +19,34 @@ enum EngineType {
 	UNKNOWN
 };
 
+struct Stats
+{
+	std::string storage;
+	std::string modsStorage;
+	std::string lastUpdated;
+};
+
 class Mod
 {
 public:
 	std::string name;
 	std::string version;
 	std::string description;
+	std::string storage;
 
 	std::string path;
 
 	ModType type = MOD;
 	EngineType supportType;
 
-	Mod(
-		std::string name,
-		std::string version,
-		std::string description,
-		std::string path,
-		ModType type = MOD,
-		EngineType supportType = OTHER
-	);
+	Mod();
+
+	Mod(std::string name,
+	    std::string version,
+	    std::string description,
+	    std::string path,
+	    ModType type = MOD,
+	    EngineType supportType = OTHER);
 
 	void approximateModType();
 
@@ -48,6 +57,7 @@ class Engine
 {
 public:
 	std::string name;
+	std::string version;
 	std::string description;
 
 	std::string rawName;
@@ -57,24 +67,27 @@ public:
 	std::string iconPath;
 	std::string executeCommand;
 
-	std::string version;
-
+	Stats stats;
 	EngineType type;
 
-	std::vector<Mod *> mods = {};
+	std::vector<Mod> mods = {};
+	std::vector<std::string> features;
 
+	Engine();
 	Engine(
-		std::string name,
-		std::string description,
-		std::string rawName,
-		std::string path,
-		std::string iconPath,
-		std::string version,
-		EngineType type,
-		std::string modsPath = "",
-		std::string addonsPath = "",
-		std::string executeCommand = ""
+	    std::string name,
+	    std::string description,
+	    std::string rawName,
+	    std::string path,
+	    std::string iconPath,
+	    std::string version,
+	    EngineType type,
+	    std::string modsPath = "",
+	    std::string addonsPath = "",
+	    std::string executeCommand = ""
 	);
+
+	void loadData();
 
 	void approximateEngineType();
 
@@ -82,4 +95,3 @@ public:
 
 	void detectAddonsFolder();
 };
-

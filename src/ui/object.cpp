@@ -58,6 +58,6 @@ void Object::draw()
 
 	if (DEBUGMODE)
 	{
-		DrawRectangle(x, y, width, height, GetColor(0xff000044));
+		DrawRectangleRec(Rectangle{x, y, width, height}, GetColor(0xff000044));
 	}
 };

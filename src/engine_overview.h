@@ -5,17 +5,18 @@
 #include "ui/sprite.h"
 #include "ui/text.h"
 
-class ModContainer : public Container {
-	public:
+class ModContainer : public Container
+{
+public:
 	Text *name;
 	Text *version;
 	Button *openFolder;
 	ModContainer(std::string name, std::string version, std::string path);
 };
 
-class ModsContainer : public Container {
-	public:
-
+class ModsContainer : public Container
+{
+public:
 	ModsContainer();
 
 	void update(float elapsed);

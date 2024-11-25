@@ -8,6 +8,7 @@ class Text : public Object
 {
 private:
 	std::string text;
+
 public:
 	float size;
 	Color color;
@@ -18,7 +19,7 @@ public:
 	Text(
 	    float x,
 	    float y,
-		std::string text,
+	    std::string text,
 	    float width = 0,
 	    float height = 0,
 	    float size = 20.0f,
@@ -28,7 +29,10 @@ public:
 	);
 
 	void setText(std::string newText);
-	std::string getText() {return text;};
+	std::string getText()
+	{
+		return text;
+	};
 	void draw();
 	void DrawTextBoxedSelectable(
 	    Font font,

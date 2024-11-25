@@ -14,7 +14,7 @@ void Container::update(float elapsed)
 	Object *lastChild = children.back();
 	scrollMax = std::max(0.0f, (lastChild->y + lastChild->height) - height);
 	if (isHovering)
-		scroll = (int)Clamp(scroll - (int)(GetMouseWheelMove() * 20), 0, scrollMax);
+		scroll = Clamp(scroll - (int)(GetMouseWheelMove() * 20), 0, scrollMax);
 	// TraceLog(LOG_INFO, TextFormat("%i", scroll));
 
 	y -= scroll;
@@ -24,7 +24,7 @@ void Container::update(float elapsed)
 
 void Container::draw()
 {
-	BeginScissorMode(x, y, width, height);
+	BeginScissorMode((int)x, (int)y, (int)width, (int)height);
 
 	y -= scroll;
 	Object::draw();

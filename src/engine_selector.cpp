@@ -1,6 +1,5 @@
 #include "engine_selector.h"
 
-
 // EngineContainer
 #pragma region EngineContainer
 EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGROUNDSECONDARYCOLOR)
@@ -37,9 +36,7 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 	for (Engine *engine : enginelist)
 	{
 		EngineContainer *enginecontainer = new EngineContainer(engine);
-		enginecontainer->clickCallback = [=]{
-			engineOverview->changeEngine(*engine);
-		};
+		enginecontainer->clickCallback = [=] { engineOverview->changeEngine(*engine); };
 		add(enginecontainer);
 	}
 

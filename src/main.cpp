@@ -25,6 +25,7 @@ For a C++ project simply rename the file to .cpp and re-run the build script
 */
 
 #include "main.h"
+#include <iostream>
 
 std::vector<Object *> mainchildren;
 void addToMain(Object *child)
@@ -43,80 +44,123 @@ void checkFileSystem()
 	}
 }
 
-void parseEngines() {
-	const char* rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
-	rapidjson::Document json;
-	json.Parse(rawJson);
-	for (auto &item : json.GetObject()) {
-		auto string = item.name.GetString();
-		TraceLog(LOG_INFO, string);
+void parseEngines()
+{
+	const char *rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
+	std::vector<Engine> engines;
+
+	rapidjson::Document document;
+	document.Parse(rawJson);
+
+	if (document.IsArray())
+	{
+		for (const auto &engineJson : document.GetArray())
+		{
+			Engine engine = Engine();
+
+			engine.name = engineJson["name"].GetString();
+			engine.version = engineJson["version"].GetString();
+			engine.description = engineJson["description"].GetString();
+			engine.path = engineJson["path"].GetString();
+			engine.modsPath = engineJson["modsPath"].GetString();
+			engine.addonsPath = engineJson["addonsPath"].GetString();
+			engine.executeCommand = engineJson["executeCommand"].GetString();
+
+			const auto &statsJson = engineJson["stats"];
+			engine.stats.storage = statsJson["storage"].GetString();
+			engine.stats.modsStorage = statsJson["modsStorage"].GetString();
+			engine.stats.lastUpdated = statsJson["lastUpdated"].GetString();
+
+			const auto &modsJson = engineJson["mods"];
+			for (const auto &modJson : modsJson.GetArray())
+			{
+				Mod mod;
+				mod.name = modJson["name"].GetString();
+				mod.storage = modJson["storage"].GetString();
+				engine.mods.push_back(mod);
+			}
+
+			const auto &features = engineJson["features"];
+			for (const auto &feature : features.GetArray())
+			{
+				engine.features.push_back(feature.GetString());
+			}
+
+			engines.push_back(engine);
+		}
+	}
+
+	for (const auto &engine : engines)
+	{
+		std::cout << "Engine Name: " << engine.name << "\n";
+		std::cout << "Version: " << engine.version << "\n";
+		std::cout << "Description: " << engine.description << "\n";
+		std::cout << "Storage: " << engine.stats.storage << "\n";
+		std::cout << "Features: ";
+		for (const auto &feature : engine.features)
+		{
+			std::cout << feature << " ";
+		}
+		std::cout << "\n\n";
 	}
 }
 
 int main()
 {
 	checkFileSystem();
-	//parseEngines();
+	parseEngines();
 
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
 	std::vector<Engine *> enginers = {};
-	enginers.push_back(
-		new Engine(
-			"Codename engine", 
-			"this engine is awful",
-			"CodenameEngine",
-			getPath("CodenameEngine"),
-			"codename.png", 
-			"1.0.0",
-			CODENAME,
-			getPath("CodenameEngine/mods"),
-			getPath("CodenameEngine/addons"),
-			"./CodenameEngine --m pj-party"
-		)
-	);
-	enginers.push_back(
-		new Engine(
-			"CNE Dev", 
-			"this engine is awful for developers",
-			"CodenameEngine",
-			getPath("build-for-devs 2"),
-			"codename.png", 
-			"dev",
-			CODENAME,
-			getPath("build-for-devs 2/mods"),
-			getPath("build-for-devs 2/addons")
-		)
-	);
-	enginers.push_back(
-		new Engine(
-			"Psych engine", 
-			"this engine is actually good",
-			"PsychEngine.exe",
-			getPath("PsychEngine"),
-			"psych.png", 
-			"1.0.3",
-			PSYCH,
-			getPath("PsychEngine/mods"),
-			getPath("PsychEngine/addons"),
-			"wine ./PsychEngine.exe"
-		)
-	);
-	enginers.push_back(
-		new Engine(
-			"FPS Plus engine", 
-			"i lowkey hate this mfing engine actually",
-			"FunkinFPSPlus.exe",
-			getPath("FPS Plus"),
-			"fpsplus.png", 
-			"6.0.idk anymore",
-			FPSPLUS,
-			getPath("FPS Plus/mods"),
-			getPath("FPS Plus/addons"),
-			"wine ./FunkinFPSPlus.exe"
-		)
-	);
+	enginers.push_back(new Engine(
+	    "Codename engine",
+	    "this engine is awful",
+	    "CodenameEngine",
+	    getPath("CodenameEngine"),
+	    "codename.png",
+	    "1.0.0",
+	    CODENAME,
+	    getPath("CodenameEngine/mods"),
+	    getPath("CodenameEngine/addons"),
+	    "./CodenameEngine --m pj-party"
+	));
+	enginers.push_back(new Engine(
+	    "CNE Dev",
+	    "this engine is awful for developers",
+	    "CodenameEngine",
+	    getPath("build-for-devs 2"),
+	    "codename.png",
+	    "dev",
+	    CODENAME,
+	    getPath("build-for-devs 2/mods"),
+	    getPath("build-for-devs 2/addons")
+	));
+	enginers.push_back(new Engine(
+	    "Psych engine",
+	    "this engine is actually good",
+	    "PsychEngine.exe",
+	    getPath("PsychEngine"),
+	    "psych.png",
+	    "1.0.3",
+	    PSYCH,
+	    getPath("PsychEngine/mods"),
+	    getPath("PsychEngine/addons"),
+	    "wine ./PsychEngine.exe"
+	));
+	enginers.push_back(new Engine(
+	    "FPS Plus engine",
+	    "i lowkey hate this mfing engine actually",
+	    "FunkinFPSPlus.exe",
+	    getPath("FPS Plus"),
+	    "fpsplus.png",
+	    "6.0.idk anymore",
+	    FPSPLUS,
+	    getPath("FPS Plus/mods"),
+	    getPath("FPS Plus/addons"),
+	    "wine ./FunkinFPSPlus.exe"
+	));
 
 	EngineOverview *there = new EngineOverview(enginers.front());
 	addToMain(there);

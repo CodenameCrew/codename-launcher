@@ -16,7 +16,8 @@ std::string getDataFolder()
 	homedir.append("/.config/codename-launcher/");
 	return homedir;
 }
-void executeProgram(std::string path, bool allocateConsole) {
+void executeProgram(std::string path, bool allocateConsole)
+{
 	system(("systemd-run \"" + path + "\"").c_str());
 }
 #elif defined(_WIN32)
@@ -31,7 +32,8 @@ std::string getDataFolder()
 	appdatadir.append("\\CodenameLauncher");
 	return appdatadir;
 }
-void executeProgram(std::string path) {
+void executeProgram(std::string path)
+{
 	system(("systemd-run \"" + path + "\"").c_str());
 }
 #elif defined(__APPLE__)
@@ -49,31 +51,38 @@ std::string getDataFolder()
 
 int curCursorState = 1;
 
-std::string getPath(std::string path) {
+std::string getPath(std::string path)
+{
 	std::string gotPath = getDataFolder() + path;
-	if (DirectoryExists(gotPath.c_str())) gotPath += "/";
+	if (DirectoryExists(gotPath.c_str()))
+		gotPath += "/";
 	return gotPath;
 }
 
-std::string findExecutable(std::string searchPath) {
+std::string findExecutable(std::string searchPath)
+{
 	TraceLog(LOG_INFO, searchPath.c_str());
+	const char *foundExecutable;
+#if defined(__linux__)
 	FilePathList executableSearch;
-	const char* foundExecutable;
-	#if defined(__linux__)
 	executableSearch = LoadDirectoryFiles(searchPath.c_str());
-	for (auto i = 0; i < (int)executableSearch.count; i++) {
+	for (auto i = 0; i < (int)executableSearch.count; i++)
+	{
 		auto curpath = executableSearch.paths[i];
-		if (std::string(GetFileName(curpath)) == std::string(GetFileNameWithoutExt(curpath)) && !DirectoryExists(curpath)) {
+		if (std::string(GetFileName(curpath)) == std::string(GetFileNameWithoutExt(curpath)) && !DirectoryExists(curpath))
+		{
 			foundExecutable = GetFileName(curpath);
 			break;
 		}
 	}
-	#elif defined(_WIN32)
+#elif defined(_WIN32)
+	FilePathList executableSearch;
 	executableSearch = LoadDirectoryFilesEx(searchPath.c_str(), "exe", false);
 	foundExecutable = GetFileName(executableSearch.paths[0]);
-	#elif defined(__APPLE__)
+#elif defined(__APPLE__)
 	// todo
-	#endif
+	foundExecutable = "cum";
+#endif
 
 	TraceLog(LOG_INFO, foundExecutable);
 	return foundExecutable;

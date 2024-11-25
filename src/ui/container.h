@@ -7,8 +7,8 @@
 class Container : public Object
 {
 public:
-	int scroll = 0;
-	int scrollMax = 0;
+	float scroll = 0;
+	float scrollMax = 0;
 	Container(float x, float y, float width, float height);
 
 	virtual void update(float elapsed);

@@ -30,7 +30,8 @@ void Text::draw()
 	);
 };
 
-void Text::setText(std::string text) {
+void Text::setText(std::string text)
+{
 	this->text = text;
 	Vector2 sizeMeasurement = MeasureTextEx(this->font, this->text.c_str(), this->size, 0.5f);
 	if (autoWidth)
@@ -68,15 +69,15 @@ void Text::DrawTextBoxedSelectable(
 	};
 	int state = wordWrap ? MEASURE_STATE : DRAW_STATE;
 
-	unsigned int startLine = -1; // Index where to begin drawing (where a line begins)
-	unsigned int endLine = -1;   // Index where to stop drawing (where a line ends)
-	unsigned int lastk = -1;	    // Holds last value of the character position
+	int startLine = -1; // Index where to begin drawing (where a line begins)
+	int endLine = -1;   // Index where to stop drawing (where a line ends)
+	int lastk = -1;	    // Holds last value of the character position
 
-	for (unsigned int i = 0, k = 0; i < length; i++, k++)
+	for (int i = 0, k = 0; i < (int)length; i++, k++)
 	{
 		// Get next codepoint from byte string and glyph index in font
 		int codepointByteCount = 0;
-		int codepoint = GetCodepoint(&text[i], &codepointByteCount);
+		int codepoint = GetCodepoint(&text[(unsigned int)i], &codepointByteCount);
 		int index = GetGlyphIndex(font, codepoint);
 
 		// NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -165,10 +166,8 @@ void Text::DrawTextBoxedSelectable(
 				{
 					DrawRectangleRec(
 					    Rectangle{
-						rec.x + textOffsetX - 1,
-						rec.y + textOffsetY,
-						glyphWidth,
-						(float)font.baseSize * scaleFactor},
+						rec.x + textOffsetX - 1, rec.y + textOffsetY, glyphWidth, (float)font.baseSize * scaleFactor
+					    },
 					    selectBackTint
 					);
 					isGlyphSelected = true;
