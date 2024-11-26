@@ -40,7 +40,7 @@ void executeProgram(std::string path, std::string executable, bool allocateConso
 		// 		break;
         // 	}
 		// }
-		while (result == 0);
+		// while (result == 0);
 	}
 }
 #elif defined(_WIN32)
