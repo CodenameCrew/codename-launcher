@@ -1,5 +1,4 @@
 #pragma once
-#include "global.h"
 #include <string>
 #include <vector>
 
@@ -72,6 +71,12 @@ public:
 
 	std::vector<Mod> mods = {};
 	std::vector<std::string> features;
+
+	#if defined(_WIN32)
+	PROCESS_INFORMATION _processPid;
+	#elif defined(__linux__) || defined(__APPLE__)
+	pid_t _processPid;
+	#endif
 
 	Engine();
 	Engine(

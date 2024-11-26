@@ -1,5 +1,5 @@
-#include "engine.h"
 #include "global.h"
+#include "engine.h"
 #include "ui/button.h"
 #include "ui/container.h"
 #include "ui/sprite.h"
@@ -36,4 +36,6 @@ public:
 	EngineOverview(Engine *engine);
 
 	void changeEngine(Engine newEngine);
+
+	void confirmEngineClose();
 };

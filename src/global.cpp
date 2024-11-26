@@ -16,9 +16,32 @@ std::string getDataFolder()
 	homedir.append("/.config/codename-launcher/");
 	return homedir;
 }
-void executeProgram(std::string path, bool allocateConsole)
+void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine)
 {
-	system(("systemd-run \"" + path + "\"").c_str());
+	pid_t pid = fork();
+
+    if (pid == 0) {
+    	setsid();
+		execlp("sh", "sh", "-c", ("cd \"" + path + "\" && " + executable).c_str(), (char*)NULL);
+		return;
+	} else {
+		TraceLog(LOG_INFO, "detached");
+		if (engine != nullptr) {
+			engine->_processPid = pid;
+		}
+		// ***TODO: make this async
+		// int status;
+		// pid_t result;
+		// do {
+		// 	result = waitpid(pid, &status, WNOHANG);
+		// 	if (result == 0) sleep(1);
+		// 	else if (WIFEXITED(status) || result != 0) {
+        //     	TraceLog(LOG_INFO, "closed instance");
+		// 		break;
+        // 	}
+		// }
+		while (result == 0);
+	}
 }
 #elif defined(_WIN32)
 #include "winapi.h"

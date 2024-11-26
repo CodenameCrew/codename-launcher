@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "global.h"
 
 Mod::Mod() {}
 Mod::Mod(std::string name, std::string version, std::string description, std::string path, ModType type, EngineType supportType)

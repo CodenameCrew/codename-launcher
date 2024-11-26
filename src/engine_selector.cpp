@@ -11,7 +11,7 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 	version = this->engine->version.c_str();
 
 	spriteIcon =
-	    new Sprite(15, 7, LoadTexture(((std::string)(ASSETS_PATH "engine_icons/") + (std::string)(this->engine->iconPath)).c_str()));
+	    new Sprite(15, 7, LoadTexture(engine->iconPath.c_str()));
 	spriteIcon->scale = 60.0f / spriteIcon->width;
 	add(spriteIcon);
 	textName = new Text(90, 17, name, 0, 0, 24.0f, false, WHITE, DEFAULTFONTBOLD);
