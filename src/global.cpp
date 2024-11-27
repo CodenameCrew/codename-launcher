@@ -55,7 +55,7 @@ std::string getDataFolder()
 	appdatadir.append("\\CodenameLauncher");
 	return appdatadir;
 }
-void executeProgram(std::string path)
+void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine)
 {
 	// TODO
 }
