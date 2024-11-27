@@ -29,7 +29,7 @@ void executeProgram(std::string path, std::string executable, bool allocateConso
 		if (engine != nullptr) {
 			engine->_processPid = pid;
 		}
-		// ***TODO: make this async
+		// //TODO: make this async
 		// int status;
 		// pid_t result;
 		// do {
@@ -57,7 +57,7 @@ std::string getDataFolder()
 }
 void executeProgram(std::string path)
 {
-	system(("systemd-run \"" + path + "\"").c_str());
+	// TODO
 }
 #elif defined(__APPLE__)
 void openFolderInExplorer(const char *path)
