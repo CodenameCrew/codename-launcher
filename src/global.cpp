@@ -16,17 +16,42 @@ std::string getDataFolder()
 	homedir.append("/.config/codename-launcher/");
 	return homedir;
 }
+std::string detectConsoleEmulator()
+{
+	const char *terminals[] = {
+	    "gnome-terminal", // GNOME Terminal
+	    "xterm",	      // XTerm
+	    "konsole",	      // Konsole (KDE)
+	    "mate-terminal",  // MATE Terminal
+	    "xfce4-terminal", // XFCE Terminal
+	    "lxterminal",     // LXTerminal
+	    "terminator",     // Terminator
+	    "alacritty"	      // Alacritty
+	};
+	for (const char *terminal : terminals)
+		if (system(("command -v " + std::string(terminal)).c_str()) == 0)
+		{
+			return std::string(terminal);
+			break;
+		}
+}
 void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine)
 {
 	pid_t pid = fork();
 
-    if (pid == 0) {
-    	setsid();
-		execlp("sh", "sh", "-c", ("cd \"" + path + "\" && " + executable).c_str(), (char*)NULL);
+	if (pid == 0)
+	{
+		setsid();
+		if (allocateConsole)
+			executable = detectConsoleEmulator() + " -- " + executable;
+		execlp("sh", "sh", "-c", ("cd \"" + path + "\" && " + executable).c_str(), (char *)NULL);
 		return;
-	} else {
+	}
+	else
+	{
 		TraceLog(LOG_INFO, "detached");
-		if (engine != nullptr) {
+		if (engine != nullptr)
+		{
 			engine->_processPid = pid;
 		}
 		// //TODO: make this async
@@ -36,9 +61,9 @@ void executeProgram(std::string path, std::string executable, bool allocateConso
 		// 	result = waitpid(pid, &status, WNOHANG);
 		// 	if (result == 0) sleep(1);
 		// 	else if (WIFEXITED(status) || result != 0) {
-        //     	TraceLog(LOG_INFO, "closed instance");
+		//     	TraceLog(LOG_INFO, "closed instance");
 		// 		break;
-        // 	}
+		// 	}
 		// }
 		// while (result == 0);
 	}
@@ -69,6 +94,10 @@ std::string getDataFolder()
 	std::string homedir = getenv("HOME");
 	homedir.append("/Library/Application Support/Codename Launcher/");
 	return homedir;
+}
+void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine)
+{
+	// TODO
 }
 #endif
 

@@ -166,8 +166,10 @@ void Text::DrawTextBoxedSelectable(
 				{
 					DrawRectangleRec(
 					    Rectangle{
-						rec.x + textOffsetX - 1, rec.y + textOffsetY, glyphWidth, (float)font.baseSize * scaleFactor
-					    },
+						rec.x + textOffsetX - 1,
+						rec.y + textOffsetY,
+						glyphWidth,
+						(float)font.baseSize * scaleFactor},
 					    selectBackTint
 					);
 					isGlyphSelected = true;

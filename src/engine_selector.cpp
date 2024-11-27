@@ -1,4 +1,5 @@
 #include "engine_selector.h"
+#include "main.h"
 
 // EngineContainer
 #pragma region EngineContainer
@@ -10,8 +11,7 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 	path = this->engine->path.c_str();
 	version = this->engine->version.c_str();
 
-	spriteIcon =
-	    new Sprite(15, 7, LoadTexture(engine->iconPath.c_str()));
+	spriteIcon = new Sprite(15, 7, LoadTexture(engine->iconPath.c_str()));
 	spriteIcon->scale = 60.0f / spriteIcon->width;
 	add(spriteIcon);
 	textName = new Text(90, 17, name, 0, 0, 24.0f, false, WHITE, DEFAULTFONTBOLD);
@@ -21,7 +21,7 @@ EngineContainer::EngineContainer(Engine *engine) : Button(0, 0, 400, 75, BACKGRO
 
 	openToLocation = new Button(300, 20, 35, 35, SECONDARYCOLOR);
 	add(openToLocation);
-	openToLocation->clickCallback = [&] { openFolderInExplorer(path); };
+	openToLocation->clickCallback = [=] { openFolderInExplorer(path); };
 	Sprite *folderIcon = new Sprite(7.5, 7.5, LoadTexture(ASSETS_PATH "ui/folder.png"));
 	openToLocation->add(folderIcon);
 }
@@ -36,7 +36,7 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 	for (Engine *engine : enginelist)
 	{
 		EngineContainer *enginecontainer = new EngineContainer(engine);
-		enginecontainer->clickCallback = [=] { engineOverview->changeEngine(*engine); };
+		enginecontainer->clickCallback = [=] { engineOverview->changeEngine(engine); };
 		add(enginecontainer);
 	}
 
@@ -80,6 +80,25 @@ void EngineSelector::add(Object *child)
 			chud->color = (iterator % 2 == 1) ? BACKGROUNDSECONDARYCOLOR : ColorBrightness(BACKGROUNDSECONDARYCOLOR, -0.15f);
 			iterator++;
 		}
+	}
+}
+
+void EngineSelector::refresh(std::vector<Engine *> newEngineList) {
+	for (int i = 0; i < newEngineList.size(); i++) {
+		auto engine = newEngineList[i];
+		EngineContainer *childy = (EngineContainer *)children[i];
+
+		childy->name = engine->name.c_str();
+		childy->path = engine->path.c_str();
+		childy->version = engine->version.c_str();
+
+		UnloadTexture(childy->spriteIcon->texture);
+		childy->spriteIcon->texture = LoadTexture(engine->iconPath.c_str());
+
+		childy->textName->setText(childy->name);
+		childy->textVersion->setText(childy->version);
+
+		childy->openToLocation->clickCallback = [=] { openFolderInExplorer(engine->path.c_str()); };
 	}
 }
 #pragma endregion

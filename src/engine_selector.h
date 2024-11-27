@@ -1,7 +1,7 @@
 #pragma once
 
-#include "main.h"
 #include "engine.h"
+#include "engine_overview.h"
 #include "raylib.h"
 #include "ui/button.h"
 #include "ui/container.h"
@@ -39,4 +39,6 @@ public:
 	void draw();
 
 	void add(Object *child);
+
+	void refresh(std::vector<Engine *> newEngineList);
 };

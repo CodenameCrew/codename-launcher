@@ -69,14 +69,14 @@ public:
 	Stats stats;
 	EngineType type;
 
-	std::vector<Mod> mods = {};
+	std::vector<Mod *> mods = {};
 	std::vector<std::string> features;
 
-	#if defined(_WIN32)
+#if defined(_WIN32)
 	PROCESS_INFORMATION _processPid;
-	#elif defined(__linux__) || defined(__APPLE__)
+#elif defined(__linux__) || defined(__APPLE__)
 	pid_t _processPid;
-	#endif
+#endif
 
 	Engine();
 	Engine(

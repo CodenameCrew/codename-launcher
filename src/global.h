@@ -1,10 +1,10 @@
 #pragma once
 
-#include "raylib.h"
 #include "engine.h"
-#include <unistd.h>
-#include <sys/wait.h>
+#include "raylib.h"
 #include <string>
+#include <sys/wait.h>
+#include <unistd.h>
 
 const char *BOOL_STR(bool b); // genuinely pisses me off
 
@@ -44,6 +44,7 @@ std::string getDataFolder();
 std::string getPath(std::string path);
 std::string findExecutable(std::string searchPath);
 
+std::string detectConsoleEmulator();
 void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine = nullptr);
 
 extern int curCursorState;

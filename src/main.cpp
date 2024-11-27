@@ -45,19 +45,37 @@ void checkFileSystem()
 }
 
 std::vector<Engine *> engines;
+EngineSelector *leftPanel;
+EngineOverview *rightPanel;
 
-void parseEngines()
+int engineJsonLastSize = 0;
+
+int parseEngines()
 {
-	const char *rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
+	bool firstTime = false;
+	char *rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
+	int jsonSize = GetFileLength((getDataFolder() + "engine_data.json").c_str());
+	if (engineJsonLastSize == 0) firstTime = true;
+	TraceLog(LOG_INFO, BOOL_STR(engineJsonLastSize == jsonSize));
+	if (engineJsonLastSize == jsonSize && !firstTime) return 0;
+	engineJsonLastSize = jsonSize;
 
 	rapidjson::Document document;
 	document.Parse(rawJson);
 
+	UnloadFileText(rawJson);
+
 	if (document.IsArray())
 	{
-		for (const auto &engineJson : document.GetArray())
+		auto legitArray = document.GetArray();
+		if (firstTime) {
+			for (int i = 0; i < legitArray.Size(); i++)
+				engines.push_back(new Engine());
+		}
+		for (int i = 0; i < legitArray.Size(); i++)
 		{
-			Engine *engine = new Engine();
+			Engine *engine = engines[i];
+			const auto &engineJson = legitArray[i];
 
 			engine->name = engineJson["name"].GetString();
 			engine->version = engineJson["version"].GetString();
@@ -69,26 +87,14 @@ void parseEngines()
 			engine->executeCommand = engineJson["executeCommand"].GetString();
 
 			const auto &statsJson = engineJson["stats"];
-			engine->stats.storage = statsJson["storage"].GetString();
-			engine->stats.modsStorage = statsJson["modsStorage"].GetString();
 			engine->stats.lastUpdated = statsJson["lastUpdated"].GetString();
 
-			const auto &modsJson = engineJson["mods"];
-			for (const auto &modJson : modsJson.GetArray())
-			{
-				Mod mod;
-				mod.name = modJson["name"].GetString();
-				mod.storage = modJson["storage"].GetString();
-				engine->mods.push_back(mod);
-			}
-
 			const auto &features = engineJson["features"];
+			if (!engine->features.empty()) engine->features.clear();
 			for (const auto &feature : features.GetArray())
 			{
 				engine->features.push_back(feature.GetString());
 			}
-
-			engines.push_back(engine);
 		}
 	}
 
@@ -105,7 +111,17 @@ void parseEngines()
 		}
 		std::cout << "\n\n";
 	}
+	return 1;
 }
+
+void checkForChanges() {
+	if (parseEngines() == 1) {
+		leftPanel->refresh(engines);
+		rightPanel->refresh();
+	}
+}
+
+bool wasFocused = false;
 
 int main()
 {
@@ -115,15 +131,22 @@ int main()
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 	InitWindow(1280, 720, "Hello Raylib");
 
+	rightPanel = new EngineOverview(engines.front());
+	addToMain(rightPanel);
 
-	EngineOverview *there = new EngineOverview(engines.front());
-	addToMain(there);
-
-	EngineSelector *here = new EngineSelector(engines, there);
-	addToMain(here);
+	leftPanel = new EngineSelector(engines, rightPanel);
+	addToMain(leftPanel);
 
 	while (!WindowShouldClose())
 	{
+		bool isFocused = IsWindowFocused();
+		if (isFocused && !wasFocused)
+		{
+			checkForChanges();
+		}
+
+		wasFocused = isFocused;
+
 		mousePosition = GetMousePosition();
 		curCursorState = 1;
 		for (auto child : mainchildren)

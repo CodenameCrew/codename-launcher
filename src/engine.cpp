@@ -47,20 +47,18 @@ void Engine::loadData()
 		this->rawName = findExecutable(path);
 	TraceLog(LOG_INFO, this->rawName.c_str());
 
-	/*if (!this->modsPath.empty()) {
-	    FilePathList modSearch = LoadDirectoryFiles(this->modsPath.c_str());
-	    for (auto i = 0; i < (int)modSearch.count; i++) {
+	if (!this->modsPath.empty())
+	{
+		FilePathList modSearch = LoadDirectoryFiles(this->modsPath.c_str());
+		for (auto i = 0; i < (int)modSearch.count; i++)
+		{
 			auto curpath = modSearch.paths[i];
-			if (DirectoryExists(curpath)) {
-		    this->mods.push_back(new Mod(
-			GetFileName(curpath),
-			"idk bro",
-			"reeks of humeros juice",
-			curpath,
-			MOD,
-			this->type
-		    ));
+			if (DirectoryExists(curpath))
+			{
+				this->mods.push_back(
+				    new Mod(GetFileName(curpath), "idk bro", "reeks of humeros juice", curpath, MOD, this->type)
+				);
 			}
 		}
-	}*/
+	}
 }
