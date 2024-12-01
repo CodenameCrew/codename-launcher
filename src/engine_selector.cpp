@@ -49,6 +49,7 @@ EngineSelector::EngineSelector(std::vector<Engine *> enginelist, EngineOverview 
 
 void EngineSelector::update(float elapsed)
 {
+
 	float addY = 0;
 	for (auto child : children)
 	{
@@ -84,10 +85,15 @@ void EngineSelector::add(Object *child)
 }
 
 void EngineSelector::refresh(std::vector<Engine *> newEngineList) {
+	if (newEngineList.size() != children.size()) {
+		while (newEngineList.size() > children.size()) add(new EngineContainer(newEngineList[children.size() - 1]));
+		while (newEngineList.size() < children.size()) children.pop_back();
+	}
 	for (int i = 0; i < newEngineList.size(); i++) {
 		auto engine = newEngineList[i];
 		EngineContainer *childy = (EngineContainer *)children[i];
 
+		childy->clickCallback = [=] { engineOverview->changeEngine(engine); };
 		childy->name = engine->name.c_str();
 		childy->path = engine->path.c_str();
 		childy->version = engine->version.c_str();

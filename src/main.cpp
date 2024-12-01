@@ -44,7 +44,7 @@ void checkFileSystem()
 	}
 }
 
-std::vector<Engine *> engines;
+std::vector<Engine *> engines = {};
 EngineSelector *leftPanel;
 EngineOverview *rightPanel;
 
@@ -52,11 +52,10 @@ int engineJsonLastSize = 0;
 
 int parseEngines()
 {
-	bool firstTime = false;
+	bool firstTime = engineJsonLastSize = 0;
 	char *rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
 	int jsonSize = GetFileLength((getDataFolder() + "engine_data.json").c_str());
-	if (engineJsonLastSize == 0) firstTime = true;
-	TraceLog(LOG_INFO, BOOL_STR(engineJsonLastSize == jsonSize));
+	TraceLog(LOG_INFO, BOOL_STR(firstTime));
 	if (engineJsonLastSize == jsonSize && !firstTime) return 0;
 	engineJsonLastSize = jsonSize;
 
@@ -71,6 +70,10 @@ int parseEngines()
 		if (firstTime) {
 			for (int i = 0; i < legitArray.Size(); i++)
 				engines.push_back(new Engine());
+		}
+		if (legitArray.Size() != engines.size()) {
+			while (legitArray.Size() > engines.size()) engines.push_back(new Engine());
+			while (legitArray.Size() < engines.size()) engines.pop_back();
 		}
 		for (int i = 0; i < legitArray.Size(); i++)
 		{
@@ -95,6 +98,8 @@ int parseEngines()
 			{
 				engine->features.push_back(feature.GetString());
 			}
+
+			engine->loadData();
 		}
 	}
 
@@ -107,7 +112,12 @@ int parseEngines()
 		std::cout << "Features: ";
 		for (const auto &feature : engine->features)
 		{
-			std::cout << feature << " ";
+			std::cout << "\n " << feature;
+		}
+		std::cout << "\nMods: ";
+		for (const auto &mod : engine->mods)
+		{
+			std::cout << "\n " << mod->name;
 		}
 		std::cout << "\n\n";
 	}

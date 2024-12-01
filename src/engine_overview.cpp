@@ -1,9 +1,41 @@
 #include "engine_overview.h"
+#include <iostream>
 
 #pragma region ModsContainer
+ModsContainer::ModsContainer() : Container(0, 300, 500, 400) {
+	//nothing ig
+}
+
 void ModsContainer::draw()
 {
 	DrawRectangleRec(Rectangle{x, y, width, height}, LISTCOLOR);
+	DrawRectangleLinesEx(Rectangle{x, y, width, height}, 2.0f, GetColor(0x00000033));
+
+	Container::draw();
+}
+
+void ModsContainer::update(float elapsed)
+{
+
+	float addY = 0;
+	for (auto child : children)
+	{
+		child->y = addY;
+		addY += child->height;
+	}
+	
+	Container::update(elapsed);
+}
+#pragma endregion
+
+#pragma region ModContainer
+ModContainer::ModContainer(std::string name, std::string version, std::string path) : Container(0, 0, 500, 50) {
+	Text *nametext = new Text(10, 10, name);
+	add(nametext);
+}
+void ModContainer::draw()
+{
+	DrawRectangleRec(Rectangle{x, y, width, height}, BACKGROUNDSECONDARYCOLOR);
 	DrawRectangleLinesEx(Rectangle{x, y, width, height}, 2.0f, GetColor(0x00000033));
 
 	Container::draw();
@@ -32,18 +64,20 @@ EngineOverview::EngineOverview(Engine *engine) : Container(500, 30, 600, 600)
 	playButton->add(playText);
 	playText->x = (65 - playText->width) / 2;
 
-	int it = 0;
-	for (auto mod : this->engine->mods)
-	{
-		TraceLog(LOG_INFO, mod->name.c_str());
-		Text *showMod = new Text(0, 400 + (50 * it++), mod->name);
-		add(showMod);
+	containerofmods = new ModsContainer();
+
+	for (auto tempMod : this->engine->mods) {
+		std::cout << "ADDED NEW MOD: " << tempMod->name;
+		ModContainer *brandnewcontainer = new ModContainer(tempMod->name, tempMod->version, tempMod->path);
+		containerofmods->add(brandnewcontainer);
 	}
 
 	add(engineIcon);
 	add(engineName);
 	add(description);
 	add(playButton);
+
+	add(containerofmods);
 }
 
 void EngineOverview::changeEngine(Engine *newEngine)

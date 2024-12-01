@@ -50,15 +50,24 @@ void Engine::loadData()
 	if (!this->modsPath.empty())
 	{
 		FilePathList modSearch = LoadDirectoryFiles(this->modsPath.c_str());
+		if ((int)modSearch.count != mods.size())
+			while ((int)modSearch.count > mods.size()) mods.push_back(new Mod());
+		int iterator = 0;
 		for (auto i = 0; i < (int)modSearch.count; i++)
 		{
 			auto curpath = modSearch.paths[i];
 			if (DirectoryExists(curpath))
 			{
-				this->mods.push_back(
-				    new Mod(GetFileName(curpath), "idk bro", "reeks of humeros juice", curpath, MOD, this->type)
-				);
+				TraceLog(LOG_INFO, curpath);
+				Mod *brandnewmod = mods[iterator++];
+				brandnewmod->name = GetFileName(curpath);
+				brandnewmod->version = "v24432";
+				brandnewmod->description = "reeks of humerus juice";
+				brandnewmod->path = curpath;
 			}
 		}
+		if (mods.size() > iterator)
+			while (mods.size() > iterator) mods.pop_back();
+		UnloadDirectoryFiles(modSearch);
 	}
 }

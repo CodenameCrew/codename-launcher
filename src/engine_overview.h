@@ -13,6 +13,8 @@ public:
 	Text *version;
 	Button *openFolder;
 	ModContainer(std::string name, std::string version, std::string path);
+
+	void draw();
 };
 
 class ModsContainer : public Container
@@ -31,6 +33,7 @@ public:
 	Text *engineName;
 	Text *description;
 	Button *playButton;
+	ModsContainer *containerofmods;
 
 	Engine *engine;
 
