@@ -1,4 +1,5 @@
 #include "container.h"
+#include <typeinfo>
 
 Container::Container(float x, float y, float width, float height) : Object(x, y, width, height)
 {

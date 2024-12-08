@@ -1,5 +1,6 @@
 #include "engine_overview.h"
 #include <iostream>
+#include <algorithm>
 
 #pragma region ModsContainer
 ModsContainer::ModsContainer() : Container(0, 300, 500, 400) {
@@ -30,8 +31,13 @@ void ModsContainer::update(float elapsed)
 
 #pragma region ModContainer
 ModContainer::ModContainer(std::string name, std::string version, std::string path) : Container(0, 0, 500, 50) {
-	Text *nametext = new Text(10, 10, name);
-	add(nametext);
+	this->name = new Text(10, 0, name, 0, 0, 20.0f, false, WHITE, DEFAULTFONTBOLD);
+	this->name->y = (this->height - this->name->height) / 2;
+	add(this->name);
+	this->version = new Text(this->name->x + this->name->width + 15, this->name->y, version, 200, 35, 18.0f, false, {255, 255, 255, 178}, DEFAULTFONT);
+	add(this->version);
+	buttons = new Container(200, (this->height - 35) / 2, 200, 35);
+	add(buttons);
 }
 void ModContainer::draw()
 {
@@ -39,6 +45,25 @@ void ModContainer::draw()
 	DrawRectangleLinesEx(Rectangle{x, y, width, height}, 2.0f, GetColor(0x00000033));
 
 	Container::draw();
+}
+void ModContainer::updateButtons(Mod *modthing, Engine *enginething) {
+	buttons->children.clear();
+
+	float offsetX = 0.0;
+
+	if (std::count(enginething->features.begin(), enginething->features.end(), "OPEN_WITH_MODS") > 0) {
+		Button *openMod = new Button(offsetX, 0, 35, 35, SECONDARYCOLOR);
+		buttons->add(openMod);
+	}
+
+	Button *openFolder = new Button(this->width - 100, (this->height - 25) / 2, 25, 25, SECONDARYCOLOR);
+	buttons->add(openFolder);
+	openFolder->clickCallback = [=] { openFolderInExplorer(getPath(modthing->path).c_str()); };
+	Sprite *folderIcon = new Sprite(0, 0, LoadTexture(ASSETS_PATH "ui/folder.png"));
+	folderIcon->scale = 25.0 / 35.0;
+	folderIcon->x = (25 - (folderIcon->width * folderIcon->scale)) / 2;
+	folderIcon->y = (25 - (folderIcon->height * folderIcon->scale)) / 2;
+	openFolder->add(folderIcon);
 }
 #pragma endregion
 
@@ -95,6 +120,26 @@ void EngineOverview::changeEngine(Engine *newEngine)
 			executablething = "\"./" + newEngine->rawName + "\"";
 		executeProgram(newEngine->path, executablething, IsKeyDown(KEY_LEFT_SHIFT), nullptr);
 	};
+
+	if (containerofmods->children.size() != engine->mods.size()) {
+		while (containerofmods->children.size() < engine->mods.size()) {
+			ModContainer *brandnewcontainer = new ModContainer("hawk tuah", "hawk tuah", "hawk tuah");
+			containerofmods->add(brandnewcontainer);
+		}
+		while (containerofmods->children.size() > engine->mods.size()) containerofmods->children.pop_back();
+	}
+
+	int iter = 0;
+	for (auto tempconaitner : containerofmods->children) {
+		ModContainer *chud = (ModContainer *)tempconaitner;
+		auto modthint = engine->mods[std::max(iter++, 0)];
+		chud->name->setText(modthint->name);
+		chud->version->setText(modthint->version);
+		chud->version->x = chud->name->x + chud->name->width + 15;
+		chud->openFolder->clickCallback = [=] {
+ 			openFolderInExplorer(getPath(modthint->path).c_str());
+		};
+	}
 };
 
 void EngineOverview::confirmEngineClose() {}

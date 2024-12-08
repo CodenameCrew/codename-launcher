@@ -11,10 +11,11 @@ class ModContainer : public Container
 public:
 	Text *name;
 	Text *version;
-	Button *openFolder;
+	Container *buttons;
 	ModContainer(std::string name, std::string version, std::string path);
 
 	void draw();
+	void updateButtons(Mod *modthing, Engine *enginething);
 };
 
 class ModsContainer : public Container
