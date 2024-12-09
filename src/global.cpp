@@ -5,6 +5,23 @@ const char *BOOL_STR(bool b)
 	return b ? "true" : "false";
 }
 
+std::vector<std::string> split(std::string s, std::string delimiter)
+{
+	size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+	std::string token;
+	std::vector<std::string> res;
+
+	while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos)
+	{
+		token = s.substr(pos_start, pos_end - pos_start);
+		pos_start = pos_end + delim_len;
+		res.push_back(token);
+	}
+
+	res.push_back(s.substr(pos_start));
+	return res;
+}
+
 #if defined(__linux__)
 void openFolderInExplorer(const char *path)
 {
@@ -115,8 +132,11 @@ std::string findExecutable(std::string searchPath)
 {
 	TraceLog(LOG_INFO, searchPath.c_str());
 	const char *foundExecutable;
-#if defined(__linux__)
 	FilePathList executableSearch;
+
+	executableSearch = LoadDirectoryFilesEx(searchPath.c_str(), ".exe", false);
+	foundExecutable = GetFileName(executableSearch.paths[0]);
+#if defined(__linux__)
 	executableSearch = LoadDirectoryFiles(searchPath.c_str());
 	for (auto i = 0; i < (int)executableSearch.count; i++)
 	{
@@ -127,10 +147,6 @@ std::string findExecutable(std::string searchPath)
 			break;
 		}
 	}
-#elif defined(_WIN32)
-	FilePathList executableSearch;
-	executableSearch = LoadDirectoryFilesEx(searchPath.c_str(), "exe", false);
-	foundExecutable = GetFileName(executableSearch.paths[0]);
 #elif defined(__APPLE__)
 	// todo
 	foundExecutable = "cum";

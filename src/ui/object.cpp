@@ -37,7 +37,8 @@ void Object::update(float elapsed)
 		child->x += x;
 		child->y += y;
 
-		child->update(elapsed);
+		if (!child->disabled)
+			child->update(elapsed);
 
 		child->x -= x;
 		child->y -= y;
@@ -50,7 +51,8 @@ void Object::draw()
 		child->x += x;
 		child->y += y;
 
-		child->draw();
+		if (!child->disabled)
+			child->draw();
 
 		child->x -= x;
 		child->y -= y;

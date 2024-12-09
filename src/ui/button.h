@@ -16,5 +16,6 @@ public:
 
 	void draw();
 
+	virtual void click();
 	std::function<void()> clickCallback;
 };

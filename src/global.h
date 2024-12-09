@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 const char *BOOL_STR(bool b); // genuinely pisses me off
+std::vector<std::string> split(std::string s, std::string delimiter);
 
 #define DEBUGMODE false
 #define DEFAULTFONT ASSETS_PATH "fonts/Roboto-Regular.ttf"

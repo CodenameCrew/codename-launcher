@@ -56,7 +56,8 @@ int parseEngines()
 	char *rawJson = LoadFileText((getDataFolder() + "engine_data.json").c_str());
 	int jsonSize = GetFileLength((getDataFolder() + "engine_data.json").c_str());
 	TraceLog(LOG_INFO, BOOL_STR(firstTime));
-	if (engineJsonLastSize == jsonSize && !firstTime) return 0;
+	if (engineJsonLastSize == jsonSize && !firstTime)
+		return 0;
 	engineJsonLastSize = jsonSize;
 
 	rapidjson::Document document;
@@ -67,13 +68,17 @@ int parseEngines()
 	if (document.IsArray())
 	{
 		auto legitArray = document.GetArray();
-		if (firstTime) {
+		if (firstTime)
+		{
 			for (int i = 0; i < legitArray.Size(); i++)
 				engines.push_back(new Engine());
 		}
-		if (legitArray.Size() != engines.size()) {
-			while (legitArray.Size() > engines.size()) engines.push_back(new Engine());
-			while (legitArray.Size() < engines.size()) engines.pop_back();
+		if (legitArray.Size() != engines.size())
+		{
+			while (legitArray.Size() > engines.size())
+				engines.push_back(new Engine());
+			while (legitArray.Size() < engines.size())
+				engines.pop_back();
 		}
 		for (int i = 0; i < legitArray.Size(); i++)
 		{
@@ -93,7 +98,8 @@ int parseEngines()
 			engine->stats.lastUpdated = statsJson["lastUpdated"].GetString();
 
 			const auto &features = engineJson["features"];
-			if (!engine->features.empty()) engine->features.clear();
+			if (!engine->features.empty())
+				engine->features.clear();
 			for (const auto &feature : features.GetArray())
 			{
 				engine->features.push_back(feature.GetString());
@@ -124,8 +130,10 @@ int parseEngines()
 	return 1;
 }
 
-void checkForChanges() {
-	if (parseEngines() == 1) {
+void checkForChanges()
+{
+	if (parseEngines() == 1)
+	{
 		leftPanel->refresh(engines);
 		rightPanel->refresh();
 	}

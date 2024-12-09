@@ -2,6 +2,7 @@
 #include "engine.h"
 #include "global.h"
 #include "ui/button.h"
+#include "ui/checkbox.h"
 #include "ui/container.h"
 #include "ui/sprite.h"
 #include "ui/text.h"
@@ -9,13 +10,16 @@
 class ModContainer : public Container
 {
 public:
+	Mod *mod;
 	Text *name;
 	Text *version;
 	Container *buttons;
-	ModContainer(std::string name, std::string version, std::string path);
+
+	ModContainer();
+	ModContainer(Mod *mod);
 
 	void draw();
-	void updateButtons(Mod *modthing, Engine *enginething);
+	void updateButtons(Engine *enginething);
 };
 
 class ModsContainer : public Container
@@ -32,6 +36,7 @@ class EngineOverview : public Container
 public:
 	Sprite *engineIcon;
 	Text *engineName;
+	Text *version;
 	Text *description;
 	Button *playButton;
 	ModsContainer *containerofmods;
@@ -41,7 +46,8 @@ public:
 	EngineOverview(Engine *engine);
 
 	void changeEngine(Engine *newEngine);
-	void refresh() {
+	void refresh()
+	{
 		changeEngine(this->engine);
 	};
 

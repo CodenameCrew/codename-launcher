@@ -12,14 +12,16 @@ void Container::update(float elapsed)
 
 	isHovering = mousePosition.x == Clamp(mousePosition.x, x, x + width) && mousePosition.y == Clamp(mousePosition.y, y, y + height);
 
-	if (!children.empty()) {
+	if (!children.empty())
+	{
 		Object *lastChild = children.back();
 		scrollMax = std::max(0.0f, (lastChild->y + lastChild->height) - height);
 		if (isHovering)
 			scroll = Clamp(scroll - (int)(GetMouseWheelMove() * 20), 0, scrollMax);
 		// TraceLog(LOG_INFO, TextFormat("%i", scroll));
 	}
-	else scrollMax = 0;
+	else
+		scrollMax = 0;
 
 	y -= scroll;
 	Object::update(elapsed);

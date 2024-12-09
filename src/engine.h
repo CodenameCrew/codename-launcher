@@ -38,6 +38,8 @@ public:
 	ModType type = MOD;
 	EngineType supportType;
 
+	bool isDisabled = false;
+
 	Mod();
 
 	Mod(std::string name,
@@ -99,4 +101,6 @@ public:
 	void detectModsFolder();
 
 	void detectAddonsFolder();
+
+	void saveModAvailability();
 };

@@ -19,13 +19,18 @@ void Button::update(float elapsed)
 		curCursorState = 4;
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
-			if (clickCallback)
-				clickCallback();
+			click();
 		}
 	}
 	else
 		tint = 0.0f;
 };
+
+void Button::click()
+{
+	if (clickCallback)
+		clickCallback();
+}
 
 void Button::draw()
 {
