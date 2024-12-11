@@ -147,7 +147,7 @@ int main()
 	parseEngines();
 
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
-	InitWindow(1280, 720, "Hello Raylib");
+	InitWindow(1280, 720, "Codename Launcher");
 
 	rightPanel = new EngineOverview(engines.front());
 	addToMain(rightPanel);

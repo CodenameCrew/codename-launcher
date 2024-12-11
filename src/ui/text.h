@@ -16,6 +16,8 @@ public:
 	bool wrap = true;
 	bool autoWidth;
 	bool autoHeight;
+	int selectStart = 0;
+	int selectEnd = 0;
 	Text(
 	    float x,
 	    float y,

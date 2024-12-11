@@ -25,8 +25,10 @@ void Text::draw()
 {
 	Object::draw();
 
+	int selectRangething = std::abs(selectStart - selectEnd);
+	//selectRangething += 1;
 	DrawTextBoxedSelectable(
-	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, wrap, color, 0, 0, BLUE, BLUE
+	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, wrap, color, std::max(std::min(selectStart, selectEnd), 0), selectRangething, BLACK, BLUE
 	);
 };
 
@@ -174,7 +176,18 @@ void Text::DrawTextBoxedSelectable(
 					);
 					isGlyphSelected = true;
 				}
-
+				Vector2 mousePosition = GetMousePosition();
+				if (mousePosition.y == Clamp(mousePosition.y, rec.y + textOffsetY, rec.y + textOffsetY + ((float)font.baseSize * scaleFactor))) {
+					if (IsMouseButtonPressed(0)) {
+						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX, rec.x + textOffsetX + glyphWidth))
+							this->selectStart = i;
+							selectEnd = i;
+					}
+					if (IsMouseButtonDown(0)) {
+						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX, rec.x + textOffsetX + glyphWidth))
+							selectEnd = i - 1;
+					}
+				}
 				// Draw current character glyph
 				if ((codepoint != ' ') && (codepoint != '\t'))
 				{
@@ -190,7 +203,7 @@ void Text::DrawTextBoxedSelectable(
 
 			if (wordWrap && (i == endLine))
 			{
-				textOffsetY += (font.baseSize + font.baseSize / 2) * scaleFactor / 2;
+				textOffsetY += (font.baseSize + font.baseSize / 2) * scaleFactor / 1.75;
 				textOffsetX = 0;
 				startLine = endLine;
 				endLine = -1;
