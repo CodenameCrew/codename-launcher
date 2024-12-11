@@ -16,8 +16,8 @@ public:
 	bool wrap = true;
 	bool autoWidth;
 	bool autoHeight;
-	int selectStart = 0;
-	int selectEnd = 0;
+	int selectStart = -1;
+	int selectEnd = -1;
 	Text(
 	    float x,
 	    float y,
@@ -44,8 +44,6 @@ public:
 	    float spacing,
 	    bool wordWrap,
 	    Color tint,
-	    int selectStart,
-	    int selectLength,
 	    Color selectTint,
 	    Color selectBackTint
 	);

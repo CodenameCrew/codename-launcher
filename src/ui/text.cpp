@@ -25,10 +25,8 @@ void Text::draw()
 {
 	Object::draw();
 
-	int selectRangething = std::abs(selectStart - selectEnd);
-	//selectRangething += 1;
 	DrawTextBoxedSelectable(
-	    font, text, Rectangle{float(x), float(y), float(width), float(height)}, size, 0.5f, wrap, color, std::max(std::min(selectStart, selectEnd), 0), selectRangething, BLACK, BLUE
+	    font, text + " ", Rectangle{float(x), float(y), float(width) + 1, float(height)}, size, 0.5f, wrap, color, BLACK, BLUE
 	);
 };
 
@@ -50,12 +48,12 @@ void Text::DrawTextBoxedSelectable(
     float spacing,
     bool wordWrap,
     Color tint,
-    int selectStart,
-    int selectLength,
     Color selectTint,
     Color selectBackTint
 )
 {
+	int selectStart = 0;
+    int selectLength = 0;
 	unsigned int length = TextLength(text.c_str()); // Total length in bytes of the text, scanned by codepoints in loop
 
 	float textOffsetY = 0;	  // Offset between lines (on line break '\n')
@@ -162,6 +160,24 @@ void Text::DrawTextBoxedSelectable(
 				if ((textOffsetY + font.baseSize * scaleFactor) > rec.height)
 					break;
 
+				Vector2 mousePosition = GetMousePosition();
+				if (mousePosition.y == Clamp(mousePosition.y, rec.y + textOffsetY, rec.y + textOffsetY + ((float)font.baseSize * scaleFactor))) {
+					if (IsMouseButtonPressed(0)) {
+						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX - (glyphWidth / 2), rec.x + textOffsetX + (glyphWidth / 2)))
+							this->selectStart = i;
+					}
+					if (IsMouseButtonDown(0) && this->selectStart != -1) {
+						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX - (glyphWidth / 3), rec.x + textOffsetX + (glyphWidth / 3)))
+							selectEnd = i;
+					}
+				}
+				else if (IsMouseButtonPressed(0)) {
+					this->selectStart = -1;
+					selectEnd = -1;
+				}
+				selectStart = std::max(std::min(this->selectStart, selectEnd), 0);
+				selectLength = std::abs(this->selectStart - selectEnd);
+
 				// Draw selection background
 				bool isGlyphSelected = false;
 				if ((selectStart >= 0) && (k >= selectStart) && (k < (selectStart + selectLength)))
@@ -175,18 +191,6 @@ void Text::DrawTextBoxedSelectable(
 					    selectBackTint
 					);
 					isGlyphSelected = true;
-				}
-				Vector2 mousePosition = GetMousePosition();
-				if (mousePosition.y == Clamp(mousePosition.y, rec.y + textOffsetY, rec.y + textOffsetY + ((float)font.baseSize * scaleFactor))) {
-					if (IsMouseButtonPressed(0)) {
-						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX, rec.x + textOffsetX + glyphWidth))
-							this->selectStart = i;
-							selectEnd = i;
-					}
-					if (IsMouseButtonDown(0)) {
-						if (mousePosition.x == Clamp(mousePosition.x, rec.x + textOffsetX, rec.x + textOffsetX + glyphWidth))
-							selectEnd = i - 1;
-					}
 				}
 				// Draw current character glyph
 				if ((codepoint != ' ') && (codepoint != '\t'))
