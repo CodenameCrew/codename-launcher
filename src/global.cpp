@@ -94,7 +94,7 @@ void openFolderInExplorer(const char *path)
 std::string getDataFolder()
 {
 	std::string appdatadir = getenv("LOCALAPPDATA");
-	appdatadir.append("\\CodenameLauncher");
+	appdatadir.append("\\CodenameLauncher\\");
 	return appdatadir;
 }
 void executeProgram(std::string path, std::string executable, bool allocateConsole, Engine *engine)
